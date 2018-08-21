@@ -1,10 +1,9 @@
 $(document).ready(() => {
 
-  chartHeight = $('.chart').width();
-  chartWidth = $('.chart').height();
-
-  const drawChart = (data) => {
+  const drawBarChart = (data, options, element) => {
     console.log(data);
+    console.log(options);
+    console.log(element);
   };
 
   const sampleData = {
@@ -17,6 +16,12 @@ $(document).ready(() => {
     "Watch TV": 37
   };
 
-  drawChart(sampleData);
+  const sampleOptions = {
+    "Data": "Something"
+  };
+
+  const sampleElement = $('.chart');
+
+  drawBarChart(sampleData, sampleOptions, sampleElement);
 
 });
