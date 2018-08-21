@@ -1,8 +1,32 @@
 $(document).ready(() => {
 
   const drawBarChart = (data, options, element) => {
-    const chartHeight = element.width();
-    const chartWidth = element.height();
+
+    // This function will return a value that is X amount higher than the tallest point (gives whitespace to the chart)
+    findHighestPoint = (data, nearest) => {
+      let highestValue = 0;
+      for (let key in data) {
+        if (highestValue < data[key]) {
+          highestValue = data[key];
+        }
+      }
+
+      return Math.ceil(highestValue / nearest) * nearest;
+    };
+
+    let chartHeight = element.height();
+    let chartWidth = element.width();
+
+    if (chartHeight === 0) {
+      // If user has not set defaults for the element div's height:
+      chartHeight = 250;
+      chartWidth = 1000;
+      element.height(chartHeight);
+      element.width(chartWidth);
+    }
+
+    // Set the chart's position as relative:
+    element.css("position", "relative");
 
     // User customizable options. Default set below:
     const {
@@ -10,34 +34,35 @@ $(document).ready(() => {
     } = options;
 
     const numberOfBars = Object.keys(data).length;
-
-    // We want the bars to start on the left-ist side and end of the rightest side, with space in between each.
     const numberOfSpaces = numberOfBars - 1;
     const sizeOfBars = (chartWidth - (numberOfSpaces * barSpacing)) / numberOfBars;
+    let barHtml = "";
 
-    let barHtml  = "";
+    highestBar = findHighestPoint(data, 5);
+    console.log(highestBar);
 
-    // Need for loop here to iterate through objects.
-    // Based on the number of bars, it will iterate through the object
+    let posLeft = 0;
     for (let i = 0; i < numberOfBars; i++) {
-      barKey = Object.keys(data)[i];
-      barValue = Object.values(data)[i];
+      let barKey = Object.keys(data)[i];
+      let barValue = Object.values(data)[i];
+      let barHeight = barValue * chartHeight / highestBar;
+      // NEED TO DO THIS:  Bar height should be dependent on the values of the data: The loop will create a div that will be the actual bar height. (So, for example if the value was 20/100, The height should be 20% of the parent div). it will be 100% of the width.
+
       barHtml = `${barHtml}
-      <div class="bar-container">
-        <div class="bar-${i} bar">
-          ${barKey}: ${barValue}
+      <div class="bar-container" style="width: ${sizeOfBars}px; left: ${posLeft}px;">
+        <div class="bar-${i} bar" style="height: ${barHeight}px; background-color: ${barColour}">
+          <div class ="bar-${i}-label">
+            ${barKey}: ${barValue}
+          </div>
         </div>
       </div>`;
-      // for each item in the obj, it will pull the key and the value.
-      // I'll have to make a string that will concatenate over the loop:
-      // It will create a parent div that is the total height of the chart
-      // Bar height should be dependent on the values of the data: The loop will create a div that will be the actual bar height. (So, for example if the value was 20/100, The height should be 20% of the parent div). it will be 100% of the width.
-      // Bar width should be dependent on the total amount of values passed. Bar spacing (space between bars) is customizable. So we need to calculate the size of the bars.
 
       // I'll have to come up with a way to flip the axes of the chart.
+
+      posLeft = posLeft + sizeOfBars + barSpacing;
     }
 
-    console.log(barHtml);
+    element.html(barHtml);
 
 
   };
@@ -45,9 +70,9 @@ $(document).ready(() => {
   const sampleData = {
     "Play Sports": 45,
     "Talk on Phone": 53,
-    "Visit With Friends": 99,
+    "Visit With Friends": 20,
     "Earn Money": 44,
-    "Chat Online": 66,
+    "Chat Online": 69,
     "School Clubs": 22,
     "Watch TV": 37
   };
@@ -55,7 +80,7 @@ $(document).ready(() => {
   const sampleOptions = {
     "barColour": "blue",
     "labelColour": "white",
-    "barSpacing": "5px",
+    "barSpacing": 5,
     "BarAxes": "x"
   };
 
