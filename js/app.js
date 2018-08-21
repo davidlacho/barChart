@@ -4,6 +4,30 @@ $(document).ready(() => {
     console.log(data);
     console.log(options);
     console.log(element);
+
+    const numberOfBars = Object.keys(data).length;
+
+    // Need for loop here to iterate through objects.
+    // Based on the number of bars, it will iterate through the object
+
+    // User Customized options:
+    // Bar Colour
+    // Label Colour
+    // Bar spacing (space between bars)
+    // Bar Chart axes (not too sure yet! Come back to this)
+
+    for (let i = 0; i < numberOfBars; i++) {
+      console.log(Object.keys(data)[i]);
+      // for each item in the obj, it will pull the key and the value.
+      // I'll have to make a string that will concatenate over the loop:
+      // It will create a parent div that is the total height of the chart
+      // Bar height should be dependent on the values of the data: The loop will create a div that will be the actual bar height. (So, for example if the value was 20/100, The height should be 20% of the parent div). it will be 100% of the width.
+      // Bar width should be dependent on the total amount of values passed. Bar spacing (space between bars) is customizable. So we need to calculate the size of the bars. We want the bars to start on the left-ist side and end of the rightest side, with space in between each.
+
+      // I'll have to come up with a way to flip the axes of the chart.
+    }
+
+
   };
 
   const sampleData = {
