@@ -26,9 +26,16 @@ const drawBarChart = (data, options, element) => {
   element.css("position", "relative");
 
   // User customizable options. Default set below:
-  const {
-    barColour = "grey", labelColour = "black", barSpacing = 5, BarAxes = "x"
+  let {
+    barColour = "grey", labelColour = "black", barSpacing = 5, BarAxes = "x", fontSize = 12, fontColour = "white", positionOfValues = "top"
   } = options;
+
+  // If the position value is center, we need to absolutely position elements differently:
+  let positionMargin = '5px';
+  if (positionOfValues === "center") {
+    positionOfValues = "top";
+    positionMargin = '50%';
+  }
 
   const numberOfBars = Object.keys(data).length;
   const numberOfSpaces = numberOfBars - 1;
@@ -47,9 +54,7 @@ const drawBarChart = (data, options, element) => {
     barHtml = `${barHtml}
       <div class="bar-container" style="width: ${sizeOfBars}px; left: ${posLeft}px;">
         <div class="bar-${i} bar" style="height: ${barHeight}px; background-color: ${barColour}">
-          <div class ="bar-${i}-label">
-            ${barKey}: ${barValue}
-          </div>
+          <div class ="bar-${i}-label bar-label" style="font-size: ${fontSize}px; color: ${fontColour}; ${positionOfValues}: ${positionMargin};">${barKey}: ${barValue}</div>
         </div>
       </div>`;
 

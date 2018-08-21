@@ -12,9 +12,12 @@ $(document).ready(() => {
 
   const sampleOptions = {
     "barColour": "blue",
-    "labelColour": "white",
+    "labelColour": "red",
     "barSpacing": 5,
-    "BarAxes": "x"
+    "BarAxes": "x",
+    "fontSize": 16,
+    "fontColour": "white",
+    "positionOfValues": "top"
   };
 
   const sampleElement = $('.chart');

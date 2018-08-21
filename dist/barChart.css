@@ -9,3 +9,15 @@
   position: absolute;
   bottom: 0;
 }
+
+.bar {
+  position: relative;
+}
+
+.bar-label {
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
+
+}
