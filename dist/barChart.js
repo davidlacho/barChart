@@ -1,5 +1,9 @@
 const drawBarChart = (data, options, element) => {
-  console.log('drawing bar chart...');
+
+  element.append("<div class='barChartApp'></div>");
+
+  const barChartApp = $(".barChartApp");
+
   // This function will return a value that is X amount higher than the tallest point (gives whitespace to the chart)
   findHighestPoint = (data, nearest) => {
     let highestValue = 0;
@@ -14,7 +18,7 @@ const drawBarChart = (data, options, element) => {
   let chartHeight = element.height();
   let chartWidth = element.width();
 
-  if (chartHeight === 0) {
+  if (chartHeight <= 2) {
     // If user has not set defaults for the element div's height:
     chartHeight = 250;
     chartWidth = 1000;
@@ -22,11 +26,29 @@ const drawBarChart = (data, options, element) => {
     element.width(chartWidth);
   }
 
-  highestBar = findHighestPoint(data, 5);
+  // Labeling Values on side of chart:
+  labelFactor = 5;
+  highestBar = findHighestPoint(data, labelFactor);
   lineWidth = Math.ceil(chartHeight / highestBar * 10);
-  console.log(lineWidth);
+  labelSpaceBetween = highestBar / labelFactor;
+  const eachLinePx = (chartHeight / labelSpaceBetween);
+
+  barChartApp.prepend("<div class='labelArea'></div>");
+
+  let labelCounter = highestBar;
+  for (o = 0; o < chartHeight; o += eachLinePx) {
+    $('.labelArea').append(`<div class="sideLabel">${labelCounter}</div>`);
+    labelCounter -= labelFactor;
+  }
+  $(".sideLabel").height(eachLinePx - 1);
+  $(".sideLabel").css({
+    "border-top": "1px black solid",
+    "width": "10px"
+  });
+
+
   // Set the chart's position as relative:
-  element.css({
+  barChartApp.css({
     "position": "relative",
     "background": "linear-gradient(to bottom, #fff, #fff 50%, #f4f4f4 50%, #f4f4f4)",
     "background-size": `100% ${lineWidth}px`
@@ -55,14 +77,14 @@ const drawBarChart = (data, options, element) => {
     let barHeight = barValue * chartHeight / highestBar;
     let barHtml = `<div class="bar-${i} bar"><div class ="bar-${i}-label bar-label">${barKey}: ${barValue}</div></div>`;
 
-    element.append(barHtml);
+    $('.barChartApp').append(barHtml);
 
 
     $(`.bar-${i}`).css({
       "width": sizeOfBars,
       "height": barHeight,
       "left": posLeft,
-      "background": `linear-gradient(to top, white, ${barColour})`
+      "background": barColour
     });
 
     $(`.bar-${i}-label`).css({

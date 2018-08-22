@@ -3,7 +3,7 @@ $(document).ready(() => {
   const sampleData = {
     "Play Sports": 45,
     "Talk on Phone": 53,
-    "Visit With Friends": 20,
+    "Visit With Friends": 68,
     "Earn Money": 50,
     "Chat Online": 10,
     "School Clubs": 22,
@@ -13,9 +13,9 @@ $(document).ready(() => {
   const sampleOptions = {
     "barColour": "blue",
     "labelColour": "red",
-    "barSpacing": 5,
+    "barSpacing": 10,
     "BarAxes": "x",
-    "fontSize": 16,
+    "fontSize": 10,
     "fontColour": "white",
     "positionOfValues": "top"
   };

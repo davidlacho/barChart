@@ -1,7 +1,16 @@
 .chart {
-  border: 1px black solid;
-  width: 1000px;
-  height: 500px;
+  width: 500px;
+  height: 250px;
+}
+
+.sideLabel {
+  font-size: 10px;
+}
+
+.barChartApp {
+  border: 1px #f4f4f4 solid;
+  width: 100%;
+  height: 100%;
 }
 
 .bar {
@@ -11,7 +20,7 @@
   height: 0;
   animation-duration: 1s;
   animation-name: slidein;
-  border-radius: 10px 10px 0 0;
+  opacity: .75;
 }
 
 @keyframes slidein {
@@ -21,6 +30,7 @@
 }
 
 .bar-label {
+  font-family: sans-serif;
   position: absolute;
   left: 0;
   right: 0;
