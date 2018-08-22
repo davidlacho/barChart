@@ -4,14 +4,20 @@
   height: 500px;
 }
 
-.bar-container {
+.bar {
   display: inline-block;
   position: absolute;
   bottom: 0;
+  height: 0;
+  animation-duration: 1s;
+  animation-name: slidein;
+  border-radius: 10px 10px 0 0;
 }
 
-.bar {
-  position: relative;
+@keyframes slidein {
+  from {
+    height: 0;
+  }
 }
 
 .bar-label {
@@ -19,5 +25,4 @@
   left: 0;
   right: 0;
   text-align: center;
-
 }

@@ -40,7 +40,6 @@ const drawBarChart = (data, options, element) => {
   const numberOfBars = Object.keys(data).length;
   const numberOfSpaces = numberOfBars - 1;
   const sizeOfBars = (chartWidth - (numberOfSpaces * barSpacing)) / numberOfBars;
-  let barHtml = "";
 
   highestBar = findHighestPoint(data, 5);
   console.log(highestBar);
@@ -51,16 +50,27 @@ const drawBarChart = (data, options, element) => {
     let barValue = Object.values(data)[i];
     let barHeight = barValue * chartHeight / highestBar;
 
-    barHtml = `${barHtml}
-      <div class="bar-container" style="width: ${sizeOfBars}px; left: ${posLeft}px;">
-        <div class="bar-${i} bar" style="height: ${barHeight}px; background-color: ${barColour}">
-          <div class ="bar-${i}-label bar-label" style="font-size: ${fontSize}px; color: ${fontColour}; ${positionOfValues}: ${positionMargin};">${barKey}: ${barValue}</div>
-        </div>
-      </div>`;
+    let barHtml = `<div class="bar-${i} bar"><div class ="bar-${i}-label bar-label">${barKey}: ${barValue}</div></div>`;
+
+    element.append(barHtml);
+
+    $(`.bar-${i}`).css({
+      "width": sizeOfBars,
+      "height": barHeight,
+      "left": posLeft,
+      "background-color": barColour
+    });
+
+    $(`.bar-${i}-label`).css({
+      "font-size": fontSize,
+      "color": fontColour,
+      [positionOfValues]: positionMargin
+    });
 
     posLeft = posLeft + sizeOfBars + barSpacing;
+
   }
 
-  element.html(barHtml);
+
 
 };
