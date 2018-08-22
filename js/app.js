@@ -4,8 +4,8 @@ $(document).ready(() => {
     "Play Sports": 45,
     "Talk on Phone": 53,
     "Visit With Friends": 20,
-    "Earn Money": 44,
-    "Chat Online": 69,
+    "Earn Money": 50,
+    "Chat Online": 10,
     "School Clubs": 22,
     "Watch TV": 37
   };

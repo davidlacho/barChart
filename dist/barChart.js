@@ -1,5 +1,5 @@
 const drawBarChart = (data, options, element) => {
-
+  console.log('drawing bar chart...');
   // This function will return a value that is X amount higher than the tallest point (gives whitespace to the chart)
   findHighestPoint = (data, nearest) => {
     let highestValue = 0;
@@ -22,8 +22,15 @@ const drawBarChart = (data, options, element) => {
     element.width(chartWidth);
   }
 
+  highestBar = findHighestPoint(data, 5);
+  lineWidth = Math.ceil(chartHeight / highestBar * 10);
+  console.log(lineWidth);
   // Set the chart's position as relative:
-  element.css("position", "relative");
+  element.css({
+    "position": "relative",
+    "background": "linear-gradient(to bottom, #fff, #fff 50%, #f4f4f4 50%, #f4f4f4)",
+    "background-size": `100% ${lineWidth}px`
+  });
 
   // User customizable options. Default set below:
   let {
@@ -41,24 +48,21 @@ const drawBarChart = (data, options, element) => {
   const numberOfSpaces = numberOfBars - 1;
   const sizeOfBars = (chartWidth - (numberOfSpaces * barSpacing)) / numberOfBars;
 
-  highestBar = findHighestPoint(data, 5);
-  console.log(highestBar);
-
   let posLeft = 0;
   for (let i = 0; i < numberOfBars; i++) {
     let barKey = Object.keys(data)[i];
     let barValue = Object.values(data)[i];
     let barHeight = barValue * chartHeight / highestBar;
-
     let barHtml = `<div class="bar-${i} bar"><div class ="bar-${i}-label bar-label">${barKey}: ${barValue}</div></div>`;
 
     element.append(barHtml);
+
 
     $(`.bar-${i}`).css({
       "width": sizeOfBars,
       "height": barHeight,
       "left": posLeft,
-      "background-color": barColour
+      "background": `linear-gradient(to top, white, ${barColour})`
     });
 
     $(`.bar-${i}-label`).css({
@@ -70,7 +74,4 @@ const drawBarChart = (data, options, element) => {
     posLeft = posLeft + sizeOfBars + barSpacing;
 
   }
-
-
-
 };
