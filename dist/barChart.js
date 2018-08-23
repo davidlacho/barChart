@@ -1,9 +1,4 @@
 const drawBarChart = (data, options, element) => {
-
-  element.append("<div class='barChartApp'></div>");
-
-  const barChartApp = $(".barChartApp");
-
   // This function will return a value that is X amount higher than the tallest point (gives whitespace to the chart)
   findHighestPoint = (data, nearest) => {
     let highestValue = 0;
@@ -15,16 +10,26 @@ const drawBarChart = (data, options, element) => {
     return Math.ceil(highestValue / nearest) * nearest;
   };
 
-  let chartHeight = element.height();
-  let chartWidth = element.width();
 
-  if (chartHeight <= 2) {
+  element.append("<div class='barChartApp'></div>");
+
+  const barChartApp = $(".barChartApp");
+
+  let elementHeight = element.height();
+  let elementWidth = element.width();
+
+  if (elementHeight <= 2) {
     // If user has not set defaults for the element div's height:
-    chartHeight = 250;
-    chartWidth = 1000;
-    element.height(chartHeight);
-    element.width(chartWidth);
+    elementHeight = 250;
+    elementWidth = 1000;
+    element.height(elementHeight);
+    element.width(elementWidth);
   }
+
+  let chartHeight = elementHeight;
+  let chartWidth = elementWidth - 25;
+
+  barChartApp.width(chartWidth);
 
   // Labeling Values on side of chart:
   labelFactor = 5;
@@ -33,30 +38,24 @@ const drawBarChart = (data, options, element) => {
   labelSpaceBetween = highestBar / labelFactor;
   const eachLinePx = (chartHeight / labelSpaceBetween);
 
-  barChartApp.prepend("<div class='labelArea'></div>");
-
+  barChartApp.append("<div class='labelArea'></div>");
   let labelCounter = highestBar;
-  for (o = 0; o < chartHeight; o += eachLinePx) {
-    $('.labelArea').append(`<div class="sideLabel">${labelCounter}</div>`);
+  for (o = 0; labelCounter > 0; o += eachLinePx) {
+    $('.labelArea').append(`<div class="sideLabel sideLabel-${labelCounter}">${labelCounter}</div>`);
     labelCounter -= labelFactor;
   }
+
   $(".sideLabel").height(eachLinePx - 1);
-  $(".sideLabel").css({
-    "border-top": "1px black solid",
-    "width": "10px"
-  });
-
-
-  // Set the chart's position as relative:
-  barChartApp.css({
-    "position": "relative",
-    "background": "linear-gradient(to bottom, #fff, #fff 50%, #f4f4f4 50%, #f4f4f4)",
-    "background-size": `100% ${lineWidth}px`
-  });
 
   // User customizable options. Default set below:
   let {
-    barColour = "grey", labelColour = "black", barSpacing = 5, BarAxes = "x", fontSize = 12, fontColour = "white", positionOfValues = "top"
+    barColour = "grey",
+    labelColour = "black",
+    barSpacing = 5,
+    BarAxes = "x",
+    fontSize = 8,
+    fontColour = "white",
+    positionOfValues = "top"
   } = options;
 
   // If the position value is center, we need to absolutely position elements differently:

@@ -3,7 +3,7 @@ $(document).ready(() => {
   const sampleData = {
     "Play Sports": 45,
     "Talk on Phone": 53,
-    "Visit With Friends": 68,
+    "Visit With Friends": 91,
     "Earn Money": 50,
     "Chat Online": 10,
     "School Clubs": 22,
