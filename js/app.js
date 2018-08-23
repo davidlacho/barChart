@@ -12,10 +12,10 @@ $(document).ready(() => {
 
   const sampleOptions = {
     "barColour": "blue",
-    "labelColour": "red",
+    "labelColour": "grey",
     "barSpacing": 10,
     "BarAxes": "x",
-    "fontSize": 10,
+    "fontSize": 8,
     "fontColour": "white",
     "positionOfValues": "top"
   };

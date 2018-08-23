@@ -1,9 +1,4 @@
-.chart {
-  width: 500px;
-  height: 250px;
-}
-
-.sideLabel {
+.label {
   font-size: 8px;
   text-align: left;
   border-bottom: 1px #f4f4f4 solid;
@@ -14,11 +9,10 @@
   left: 25px;
 }
 
-.labelArea {
+.chartingArea {
   border-top: 1px #f4f4f4 solid;
   border-right: 1px #f4f4f4 solid;
   border-left: 1px #f4f4f4 solid;
-  color: #616161;
   font-family: sans-serif;
   position: relative;
   left: -25px;
