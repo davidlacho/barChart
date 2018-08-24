@@ -1,8 +1,14 @@
-// THINGS TO DO:
-// The title of the bar chart should be able to be set and shown dynamically
-// The title of the bar chart should also be customizable:
-// Font Size
-// Font Colour
+// Stuff to do still:
+
+// Refactor: The element parameter should be a DOM element or jQuery element that the chart will get rendered into. I like the idea of being able to pass in EITHER a jQuery object or a string indicating WHICH jQuery object.
+
+// Refactor: The data parameter will be the data the chart should work from Start with just an Array of numbers. e.g. [1, 2, 3, 4, 5]
+
+// X-axis should show labels for each data value. Think about how you would need to structure your data to associate a label to each value. Currently labels are shown in the bar themselves.
+
+// Allow the user to pass multiple values for each bar. Think about how you would need to structure this data compared to a single bar chart. This should also support all the features of the single bar chart, including: Customizable bar colours, per value, Customizable label colours
+
+
 
 const drawBarChart = (data, options, element) => {
 

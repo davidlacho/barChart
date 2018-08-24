@@ -11,9 +11,9 @@ $(document).ready(() => {
   };
 
   const sampleOptions = {
-    "title": "Some Barchart",
-    "titleFontSize": 20,
-    "titleFontColour": "red",
+    "title": "Sample Data",
+    "titleFontSize": 16,
+    "titleFontColour": "black",
     "barColour": "blue",
     "labelColour": "grey",
     "barSpacing": 10,
