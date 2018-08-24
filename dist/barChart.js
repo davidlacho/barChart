@@ -1,38 +1,25 @@
+// THINGS TO DO:
+// The title of the bar chart should be able to be set and shown dynamically
+// The title of the bar chart should also be customizable:
+// Font Size
+// Font Colour
+
 const drawBarChart = (data, options, element) => {
-  // Error Handling:
-  try {
-    
-    if (typeof element !== 'object') {
-      throw new Error('The third argument passed in to the drawBarChart requires a jQuery object.');
-    }
 
-    // Helper Functions:
-    // This function will return a value that is X amount higher than the tallest point (gives whitespace to the chart)
-    findHighestPoint = (data, nearest) => {
-      let highestValue = 0;
-      for (let key in data) {
-        if (highestValue < data[key]) {
-          highestValue = data[key];
-        }
+
+  // Helper Functions:
+  // This function will return a value that is X amount higher than the tallest point (gives whitespace to the chart)
+  findHighestPoint = (data, nearest) => {
+    let highestValue = 0;
+    for (let key in data) {
+      if (highestValue < data[key]) {
+        highestValue = data[key];
       }
-      return Math.ceil(highestValue / nearest) * nearest;
-    };
+    }
+    return Math.ceil(highestValue / nearest) * nearest;
+  };
 
-    // Variable Declaration:
-    // User customizable options. Default set below:
-    let {
-      barColour = "grey",
-        labelColour = "black",
-        barSpacing = 5,
-        BarAxes = "x",
-        fontSize = 8,
-        fontColour = "white",
-        positionOfValues = "top"
-    } = options;
-
-    // Create an area in the element where the chart will actually be rendered:
-    element.append("<!-- barChartApp Rendered Below: --><div class='barChartApp'></div><!-- /.barChartApp -->");
-
+  dimensions = (element) => {
     // Determine the dimensions of the element:
     let elementHeight = element.height();
     let elementWidth = element.width();
@@ -48,77 +35,98 @@ const drawBarChart = (data, options, element) => {
       element.width(elementWidth);
     }
 
-    let chartHeight = elementHeight;
-    let chartWidth = elementWidth - 25;
+    return {
+      "height": elementHeight - 25,
+      "width": elementWidth - 25
+    };
+  };
 
-    $(".barChartApp").width(chartWidth);
+  // Variable Declaration:
+  // User customizable options. Default set below:
+  let {
+    title = "", titleFontSize = "12", titleFontColour = "grey", barColour = "grey", labelColour = "black", barSpacing = 5, BarAxes = "x", fontSize = 8, fontColour = "white", positionOfValues = "top", tickFactor = 5
+  } = options;
 
-    // Labeling Values on side of chart:
-    // labelFactor determines increments:
-    const labelFactor = 5;
-    highestBar = findHighestPoint(data, labelFactor);
-    lineWidth = Math.ceil(chartHeight / highestBar * 10);
-    labelSpaceBetween = highestBar / labelFactor;
-    const eachLinePx = (chartHeight / labelSpaceBetween);
+  // Create an area in the element where the chart will actually be rendered:
+  element.append("<!-- barChartApp Rendered Below: --><div class='barChartApp'></div><!-- /.barChartApp -->");
 
-    // Create a div that spans across the width of the chart:
-    $(".barChartApp").append("<div class='chartingArea'></div>");
-    let labelCounter = highestBar;
-    for (o = 0; labelCounter > 0; o += eachLinePx) {
-      $('.chartingArea').append(`<div class="label label-${labelCounter}">${labelCounter}</div>`);
-      labelCounter -= labelFactor;
-    }
+  let chartHeight = dimensions(element).height;
+  let chartWidth = dimensions(element).width;
 
-    // Add custom user styles to the side label:
-    $(".label").css({
-      "height": `${eachLinePx - 1}px`,
-      "color": labelColour
+  $(".barChartApp").width(chartWidth);
+  $(".barChartApp").height(chartHeight);
+
+
+  // Add title:
+
+  $(".barChartApp").append(`<div class='titleArea' style='color: ${titleFontColour}; font-size: ${titleFontSize}px'>${title}</div>`);
+
+
+  // Labeling Values on side of chart:
+  // tickFactor determines increments:
+  highestBar = findHighestPoint(data, tickFactor);
+  lineWidth = Math.ceil(chartHeight / highestBar * 10);
+  labelSpaceBetween = highestBar / tickFactor;
+  const eachLinePx = (chartHeight / labelSpaceBetween);
+
+  // Create a div that spans across the width of the chart:
+  $(".barChartApp").append("<div class='chartingArea'></div>");
+  let labelCounter = highestBar;
+  for (o = 0; labelCounter > 0; o += eachLinePx) {
+    $('.chartingArea').append(`<div class="label label-${labelCounter}">${labelCounter}</div>`);
+    labelCounter -= tickFactor;
+  }
+
+  // Add custom user styles to the side label:
+  $(".label").css({
+    "height": `${eachLinePx - 1}px`,
+    "color": labelColour
+  });
+
+  // Calculate the number of bars needed, and the space they will take:
+  const numberOfBars = Object.keys(data).length;
+  const numberOfSpaces = numberOfBars - 1;
+  const sizeOfBars = (chartWidth - (numberOfSpaces * barSpacing)) / numberOfBars;
+
+  $('.barChartApp').append('<div class="barArea">');
+  // Create the bars, adding to the posLeft which absolutely position divs
+  let posLeft = 0;
+  for (let i = 0; i < numberOfBars; i++) {
+    let barKey = Object.keys(data)[i];
+    let barValue = Object.values(data)[i];
+    let barHeight = barValue * chartHeight / highestBar;
+    let barHtml = `<div class="bar-${i} bar"><div class ="bar-${i}-label bar-label">${barKey}: ${barValue}</div></div>`;
+
+    $('.barArea').append(barHtml);
+
+    // Apply custom user options to the bars:
+    $(`.bar-${i}`).css({
+      "width": sizeOfBars,
+      "height": barHeight,
+      "left": posLeft,
+      "background": barColour
     });
 
-    // Calculate the number of bars needed, and the space they will take:
-    const numberOfBars = Object.keys(data).length;
-    const numberOfSpaces = numberOfBars - 1;
-    const sizeOfBars = (chartWidth - (numberOfSpaces * barSpacing)) / numberOfBars;
-
-    // Create the bars, adding to the posLeft which absolutely position divs
-    let posLeft = 0;
-    for (let i = 0; i < numberOfBars; i++) {
-      let barKey = Object.keys(data)[i];
-      let barValue = Object.values(data)[i];
-      let barHeight = barValue * chartHeight / highestBar;
-      let barHtml = `<div class="bar-${i} bar"><div class ="bar-${i}-label bar-label">${barKey}: ${barValue}</div></div>`;
-
-      $('.barChartApp').append(barHtml);
-
-      // Apply custom user options to the bars:
-      $(`.bar-${i}`).css({
-        "width": sizeOfBars,
-        "height": barHeight,
-        "left": posLeft,
-        "background": barColour
-      });
-
-      // If the user defines the position value as center, we need to absolutely position elements differently:
-      // positionMargin tells how many px to put from either top/bottom
-      let positionMargin = '5px';
-      if (positionOfValues === "center") {
-        // This "cheats" by actually positioning it at top with 50%.
-        positionOfValues = "top";
-        positionMargin = '50%';
-      }
-
-      // Apply custom user options to the labels:
-      $(`.bar-${i}-label`).css({
-        "font-size": fontSize,
-        "color": fontColour,
-        [positionOfValues]: positionMargin
-      });
-
-      posLeft += sizeOfBars + barSpacing;
+    // If the user defines the position value as center, we need to absolutely position elements differently:
+    // positionMargin tells how many px to put from either top/bottom
+    let positionMargin = '5px';
+    if (positionOfValues === "center") {
+      // This "cheats" by actually positioning it at top with 50%.
+      positionOfValues = "top";
+      positionMargin = '50%';
     }
 
-  } catch (err) {
-    console.error(err);
+    // Apply custom user options to the labels:
+    $(`.bar-${i}-label`).css({
+      "font-size": fontSize,
+      "color": fontColour,
+      [positionOfValues]: positionMargin
+    });
+
+    posLeft += sizeOfBars + barSpacing;
   }
+  // Close the .barArea div:
+  $('.barArea').append("</div>");
+
 };
 // End drawBarChart
