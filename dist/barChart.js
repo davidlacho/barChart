@@ -25,13 +25,15 @@ const drawBarChart = (data, options, element) => {
     let elementWidth = element.width();
 
     // If user has not set default dimensions for the element div's:
-    if (elementHeight <= 2) {
+    if (elementHeight < 250) {
+      console.warn("barChartApp: Consider setting appropriate height for the DOM element that will render the barChartApp. Setting default height of 250px.");
       elementHeight = 250;
       element.height(elementHeight);
     }
 
-    if (elementWidth <= 2) {
-      elementWidth = 500;
+    if (elementWidth < 400) {
+      console.warn("barChartApp: Consider setting appropriate width for the DOM element that will render the barChartApp. Setting default height of 400px.");
+      elementWidth = 400;
       element.width(elementWidth);
     }
 
