@@ -2,5 +2,3 @@ node_modules
 .DS_Store
 resourcesUsed.txt
 offline
-.editorconfig
-.eslintrc.js
