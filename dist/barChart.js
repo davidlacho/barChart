@@ -1,6 +1,6 @@
 // Stuff to do still:
 
-// Refactor: The element parameter should be a DOM element or jQuery element that the chart will get rendered into. I like the idea of being able to pass in EITHER a jQuery object or a string indicating WHICH jQuery object.
+// Refactor: The renderArea parameter should be a DOM renderArea or jQuery renderArea that the chart will get rendered into. I like the idea of being able to pass in EITHER a jQuery object or a string indicating WHICH jQuery object.
 
 // Refactor: The data parameter will be the data the chart should work from Start with just an Array of numbers. e.g. [1, 2, 3, 4, 5]
 
@@ -12,6 +12,12 @@
 
 const drawBarChart = (data, options, element) => {
 
+  let renderArea;
+  if (element.jquery) {
+    renderArea = element;
+  } else if (typeof element === 'string') {
+    renderArea = $(element);
+  }
 
   // Helper Functions:
   // This function will return a value that is X amount higher than the tallest point (gives whitespace to the chart)
@@ -25,22 +31,22 @@ const drawBarChart = (data, options, element) => {
     return Math.ceil(highestValue / nearest) * nearest;
   };
 
-  dimensions = (element) => {
-    // Determine the dimensions of the element:
-    let elementHeight = element.height();
-    let elementWidth = element.width();
+  dimensions = (renderArea) => {
+    // Determine the dimensions of the renderArea:
+    let elementHeight = renderArea.height();
+    let elementWidth = renderArea.width();
 
-    // If user has not set default dimensions for the element div's:
+    // If user has not set default dimensions for the renderArea div's:
     if (elementHeight < 250) {
-      console.warn("barChartApp: Consider setting appropriate height for the DOM element that will render the barChartApp. Setting default height of 250px.");
+      console.warn("barChartApp: Consider setting appropriate height for the DOM renderArea that will render the barChartApp. Setting default height of 250px.");
       elementHeight = 250;
-      element.height(elementHeight);
+      renderArea.height(elementHeight);
     }
 
     if (elementWidth < 400) {
-      console.warn("barChartApp: Consider setting appropriate width for the DOM element that will render the barChartApp. Setting default height of 400px.");
+      console.warn("barChartApp: Consider setting appropriate width for the DOM renderArea that will render the barChartApp. Setting default height of 400px.");
       elementWidth = 400;
-      element.width(elementWidth);
+      renderArea.width(elementWidth);
     }
 
     return {
@@ -55,11 +61,11 @@ const drawBarChart = (data, options, element) => {
     title = "", titleFontSize = "12", titleFontColour = "grey", barColour = "grey", labelColour = "black", barSpacing = 5, BarAxes = "x", fontSize = 8, fontColour = "white", positionOfValues = "top", tickFactor = 5
   } = options;
 
-  // Create an area in the element where the chart will actually be rendered:
-  element.append("<!-- barChartApp Rendered Below: --><div class='barChartApp'></div><!-- /.barChartApp -->");
+  // Create an area in the renderArea where the chart will actually be rendered:
+  renderArea.append("<!-- barChartApp Rendered Below: --><div class='barChartApp'></div><!-- /.barChartApp -->");
 
-  let chartHeight = dimensions(element).height;
-  let chartWidth = dimensions(element).width;
+  let chartHeight = dimensions(renderArea).height;
+  let chartWidth = dimensions(renderArea).width;
 
   $(".barChartApp").width(chartWidth);
   $(".barChartApp").height(chartHeight);
