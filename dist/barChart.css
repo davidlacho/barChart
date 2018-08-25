@@ -7,13 +7,13 @@
 .barChartApp {
   position: relative;
   left: 25px;
+  font-family: sans-serif;
 }
 
 .chartingArea {
   border-top: 1px #f4f4f4 solid;
   border-right: 1px #f4f4f4 solid;
   border-left: 1px #f4f4f4 solid;
-  font-family: sans-serif;
   position: relative;
   left: -25px;
   width: calc(100% + 25px);
@@ -26,15 +26,13 @@
   left: -25px;
   top: 0;
   text-align: center;
-  font-family: sans-serif;
 }
 
 .barArea {
   position: relative;
 }
 
-.chartingArea,
-.barArea {
+.chartingArea, .barArea {
   top: 25px;
 }
 
@@ -48,6 +46,19 @@
   opacity: .75;
 }
 
+.barLabelArea {
+  height: 24px;
+  position: absolute;
+  width: 100%;
+  bottom: -51px;
+}
+
+.bar-text-label {
+  display: inline-block;
+  position: absolute;
+  text-align: center;
+}
+
 @keyframes slidein {
   from {
     height: 0;
@@ -55,7 +66,6 @@
 }
 
 .bar-label {
-  font-family: sans-serif;
   position: absolute;
   left: 0;
   right: 0;

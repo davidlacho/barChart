@@ -1,15 +1,5 @@
 $(document).ready(() => {
 
-  // const sampleData = {
-  //   "Play Sports": 45,
-  //   "Talk on Phone": 53,
-  //   "Visit With Friends": 11,
-  //   "Earn Money": 50,
-  //   "Chat Online": 10,
-  //   "School Clubs": 22,
-  //   "Watch TV": 37
-  // };
-
   const sampleData = [
     ["Play Sports", 45],
     ["Talk on Phone", 53],
@@ -28,9 +18,9 @@ $(document).ready(() => {
     "labelColour": "grey",
     "barSpacing": 10,
     "BarAxes": "x",
-    "fontSize": 8,
+    "fontSize": 12,
     "fontColour": "white",
-    "positionOfValues": "top",
+    "positionOfValues": "center",
     "tickFactor": 2
   };
 

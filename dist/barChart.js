@@ -1,9 +1,5 @@
 // Stuff to do still:
 
-// Refactor: The data parameter will be the data the chart should work from Start with just an Array of numbers. e.g. [1, 2, 3, 4, 5]
-
-// X-axis should show labels for each data value. Think about how you would need to structure your data to associate a label to each value. Currently labels are shown in the bar themselves.
-
 // Allow the user to pass multiple values for each bar. Think about how you would need to structure this data compared to a single bar chart. This should also support all the features of the single bar chart, including: Customizable bar colours, per value, Customizable label colours
 
 const drawBarChart = (data, options, element) => {
@@ -54,7 +50,7 @@ const drawBarChart = (data, options, element) => {
     }
 
     return {
-      "height": elementHeight - 25,
+      "height": elementHeight - 50,
       "width": elementWidth - 25
     };
   };
@@ -62,7 +58,7 @@ const drawBarChart = (data, options, element) => {
   // Variable Declaration:
   // User customizable options. Default set below:
   let {
-    title = "", titleFontSize = "12", titleFontColour = "grey", barColour = "grey", labelColour = "black", barSpacing = 5, BarAxes = "x", fontSize = 8, fontColour = "white", positionOfValues = "top", tickFactor = 5
+    title = "", titleFontSize = "12", titleFontColour = "grey", barColour = "grey", labelColour = "black", barSpacing = 5, BarAxes = "x", fontSize = 8, fontColour = "white", positionOfValues = "center", tickFactor = 5
   } = options;
 
   // Create an area in the renderArea where the chart will actually be rendered:
@@ -76,7 +72,6 @@ const drawBarChart = (data, options, element) => {
 
 
   // Add title:
-
   $(".barChartApp").append(`<div class='titleArea' style='color: ${titleFontColour}; font-size: ${titleFontSize}px'>${title}</div>`);
 
 
@@ -107,15 +102,18 @@ const drawBarChart = (data, options, element) => {
   const sizeOfBars = (chartWidth - (numberOfSpaces * barSpacing)) / numberOfBars;
 
   $('.barChartApp').append('<div class="barArea">');
+  $('.barChartApp').append('<div class="barLabelArea">');
   // Create the bars, adding to the posLeft which absolutely position divs
   let posLeft = 0;
   for (let i = 0; i < numberOfBars; i++) {
     let barKey = Object.keys(dataObject)[i];
     let barValue = Object.values(dataObject)[i];
     let barHeight = barValue * chartHeight / highestBar;
-    let barHtml = `<div class="bar-${i} bar"><div class ="bar-${i}-label bar-label">${barKey}: ${barValue}</div></div>`;
+    let barHtml = `<div class="bar-${i} bar"><div class ="bar-${i}-label bar-label">${barValue}</div></div>`;
+    let barLabelHtml = `<div class='bar-text-label bar-${i}-text-label'>${barKey}</div>`;
 
     $('.barArea').append(barHtml);
+    $('.barLabelArea').append(barLabelHtml);
 
     // Apply custom user options to the bars:
     $(`.bar-${i}`).css({
@@ -125,23 +123,31 @@ const drawBarChart = (data, options, element) => {
       "background": barColour
     });
 
-    // If the user defines the position value as center, we need to absolutely position elements differently:
-    // positionMargin tells how many px to put from either top/bottom
-    let positionMargin = '5px';
-    if (positionOfValues === "center") {
-      // This "cheats" by actually positioning it at top with 50%.
-      positionOfValues = "top";
-      positionMargin = '50%';
-    }
+    $(`.bar-${i}-text-label`).css({
+      "width": sizeOfBars,
+      "left": posLeft,
+      "font-size": fontSize
+    });
+
 
     // Apply custom user options to the labels:
     $(`.bar-${i}-label`).css({
       "font-size": fontSize,
-      "color": fontColour,
-      [positionOfValues]: positionMargin
+      "color": fontColour
     });
+    if (positionOfValues === "center") {
+      // This "cheats" by actually positioning it at top with 50%.
+      $(`.bar-${i}-label`).css({
+        "top": "50%"
+      });
+    } else {
+      $(`.bar-${i}-label`).css({
+        [positionOfValues]: "5px"
+      });
+    }
 
     posLeft += sizeOfBars + barSpacing;
+
   }
   // Close the .barArea div:
   $('.barArea').append("</div>");
