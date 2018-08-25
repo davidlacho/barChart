@@ -23,13 +23,13 @@ const drawBarChart = (data, options, element) => {
 
     // If user has not set default dimensions for the renderArea div's:
     if (elementHeight < 250) {
-      console.warn("barChartApp: Consider setting appropriate height for the DOM renderArea that will render the barChartApp. Setting default height of 250px.");
+      console.warn("barChartIt: Consider setting appropriate height for the DOM renderArea that will render the barChartIt. Setting default height of 250px.");
       elementHeight = 250;
       renderArea.height(elementHeight);
     }
 
     if (elementWidth < 400) {
-      console.warn("barChartApp: Consider setting appropriate width for the DOM renderArea that will render the barChartApp. Setting default height of 400px.");
+      console.warn("barChartIt: Consider setting appropriate width for the DOM renderArea that will render the barChartIt. Setting default height of 400px.");
       elementWidth = 400;
       renderArea.width(elementWidth);
     }
@@ -64,17 +64,17 @@ const drawBarChart = (data, options, element) => {
   } = options;
 
   // Create an area in the renderArea where the chart will actually be rendered:
-  renderArea.append("<!-- barChartApp Rendered Below: --><div class='barChartApp'></div><!-- /.barChartApp -->");
+  renderArea.append("<!-- barChartIt Rendered Below: --><div class='barChartIt'></div><!-- /.barChartIt -->");
 
   // Set dimensions of the area:
   let chartHeight = dimensions(renderArea).height;
   let chartWidth = dimensions(renderArea).width;
-  $(".barChartApp").width(chartWidth);
-  $(".barChartApp").height(chartHeight);
+  $(".barChartIt").width(chartWidth);
+  $(".barChartIt").height(chartHeight);
 
 
   // Add title:
-  $(".barChartApp").append(`<div class='titleArea'>${title}</div>`);
+  $(".barChartIt").append(`<div class='titleArea'>${title}</div>`);
   // Add user defined styling to titleArea:
   $(".titleArea").css({
     "color": titleFontColour,
@@ -90,7 +90,7 @@ const drawBarChart = (data, options, element) => {
   const eachLinePx = (chartHeight / labelSpaceBetween);
 
   // Create a div that spans across the width of the chart:
-  $(".barChartApp").append("<div class='chartingArea'></div>");
+  $(".barChartIt").append("<div class='chartingArea'></div>");
   let labelCounter = highestBar;
   // Append divs for each tick, creating the side labels:
   for (o = 0; labelCounter > 0; o += eachLinePx) {
@@ -108,8 +108,8 @@ const drawBarChart = (data, options, element) => {
   const numberOfBars = Object.keys(dataObject).length;
   const numberOfSpaces = numberOfBars - 1;
   const sizeOfBars = (chartWidth - (numberOfSpaces * barSpacing)) / numberOfBars;
-  $('.barChartApp').append('<div class="barArea">');
-  $('.barChartApp').append('<div class="barLabelArea">');
+  $('.barChartIt').append('<div class="barArea">');
+  $('.barChartIt').append('<div class="barLabelArea">');
 
   // Create the bars and their labels, adding to the posLeft which absolutely position divs
   let posLeft = 0;
