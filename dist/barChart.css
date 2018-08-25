@@ -46,6 +46,11 @@
   border-radius: 3px 3px 0 0;
 }
 
+.bar:hover {
+  transform: scale(1.01);
+  opacity: .8;
+}
+
 .barLabelArea {
   height: 24px;
   position: absolute;
