@@ -1,14 +1,10 @@
 // Stuff to do still:
 
-// Refactor: The renderArea parameter should be a DOM renderArea or jQuery renderArea that the chart will get rendered into. I like the idea of being able to pass in EITHER a jQuery object or a string indicating WHICH jQuery object.
-
 // Refactor: The data parameter will be the data the chart should work from Start with just an Array of numbers. e.g. [1, 2, 3, 4, 5]
 
 // X-axis should show labels for each data value. Think about how you would need to structure your data to associate a label to each value. Currently labels are shown in the bar themselves.
 
 // Allow the user to pass multiple values for each bar. Think about how you would need to structure this data compared to a single bar chart. This should also support all the features of the single bar chart, including: Customizable bar colours, per value, Customizable label colours
-
-
 
 const drawBarChart = (data, options, element) => {
 
@@ -19,13 +15,21 @@ const drawBarChart = (data, options, element) => {
     renderArea = $(element);
   }
 
+  let dataObject = {};
+
+  for (let i = 0; i < data.length; i++) {
+    const key = data[i][0];
+    const value = data[i][1];
+    dataObject[key] = value;
+  }
+
   // Helper Functions:
   // This function will return a value that is X amount higher than the tallest point (gives whitespace to the chart)
-  findHighestPoint = (data, nearest) => {
+  findHighestPoint = (dataObject, nearest) => {
     let highestValue = 0;
-    for (let key in data) {
-      if (highestValue < data[key]) {
-        highestValue = data[key];
+    for (let key in dataObject) {
+      if (highestValue < dataObject[key]) {
+        highestValue = dataObject[key];
       }
     }
     return Math.ceil(highestValue / nearest) * nearest;
@@ -78,7 +82,7 @@ const drawBarChart = (data, options, element) => {
 
   // Labeling Values on side of chart:
   // tickFactor determines increments:
-  highestBar = findHighestPoint(data, tickFactor);
+  highestBar = findHighestPoint(dataObject, tickFactor);
   lineWidth = Math.ceil(chartHeight / highestBar * 10);
   labelSpaceBetween = highestBar / tickFactor;
   const eachLinePx = (chartHeight / labelSpaceBetween);
@@ -98,7 +102,7 @@ const drawBarChart = (data, options, element) => {
   });
 
   // Calculate the number of bars needed, and the space they will take:
-  const numberOfBars = Object.keys(data).length;
+  const numberOfBars = Object.keys(dataObject).length;
   const numberOfSpaces = numberOfBars - 1;
   const sizeOfBars = (chartWidth - (numberOfSpaces * barSpacing)) / numberOfBars;
 
@@ -106,8 +110,8 @@ const drawBarChart = (data, options, element) => {
   // Create the bars, adding to the posLeft which absolutely position divs
   let posLeft = 0;
   for (let i = 0; i < numberOfBars; i++) {
-    let barKey = Object.keys(data)[i];
-    let barValue = Object.values(data)[i];
+    let barKey = Object.keys(dataObject)[i];
+    let barValue = Object.values(dataObject)[i];
     let barHeight = barValue * chartHeight / highestBar;
     let barHtml = `<div class="bar-${i} bar"><div class ="bar-${i}-label bar-label">${barKey}: ${barValue}</div></div>`;
 
