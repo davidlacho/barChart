@@ -16,10 +16,9 @@ $(document).ready(() => {
     "titleFontColour": "black",
     "barColour": "blue",
     "labelColour": "grey",
-    "barSpacing": 10,
+    "barSpacing": 5,
     "BarAxes": "x",
     "fontSize": 12,
-    "fontColour": "white",
     "positionOfValues": "center",
     "tickFactor": 2
   };

@@ -58,7 +58,7 @@ const drawBarChart = (data, options, element) => {
   // Variable Declaration:
   // User customizable options. Default set below:
   let {
-    title = "", titleFontSize = "12", titleFontColour = "grey", barColour = "grey", labelColour = "black", barSpacing = 5, BarAxes = "x", fontSize = 8, fontColour = "white", positionOfValues = "center", tickFactor = 5
+    title = "", titleFontSize = "12", titleFontColour = "grey", barColour = "grey", labelColour = "black", barSpacing = 5, BarAxes = "x", fontSize = 8, positionOfValues = "center", tickFactor = 5
   } = options;
 
   // Create an area in the renderArea where the chart will actually be rendered:
@@ -72,7 +72,13 @@ const drawBarChart = (data, options, element) => {
 
 
   // Add title:
-  $(".barChartApp").append(`<div class='titleArea' style='color: ${titleFontColour}; font-size: ${titleFontSize}px'>${title}</div>`);
+  $(".barChartApp").append(`<div class='titleArea'>${title}</div>`);
+
+  // Add user defined styling to titleArea:
+  $(".titleArea").css({
+    "color": titleFontColour,
+    "font-size": `${titleFontSize}px`
+  });
 
 
   // Labeling Values on side of chart:
@@ -126,14 +132,15 @@ const drawBarChart = (data, options, element) => {
     $(`.bar-${i}-text-label`).css({
       "width": sizeOfBars,
       "left": posLeft,
-      "font-size": fontSize
+      "font-size": fontSize,
+      "color": labelColour
     });
 
 
     // Apply custom user options to the labels:
     $(`.bar-${i}-label`).css({
       "font-size": fontSize,
-      "color": fontColour
+      "color": labelColour
     });
     if (positionOfValues === "center") {
       // This "cheats" by actually positioning it at top with 50%.
