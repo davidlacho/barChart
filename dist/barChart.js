@@ -6,11 +6,11 @@ const drawBarChart = (data, options, element) => {
 
   // Helper Functions:
   // This function will return a value that is X amount higher than the tallest point (gives whitespace to the chart)
-  findHighestPoint = (dataObject, nearest) => {
+  findHighestPoint = (dataObject1, nearest) => {
     let highestValue = 0;
-    for (let key in dataObject) {
-      if (highestValue < dataObject[key]) {
-        highestValue = dataObject[key];
+    for (let key in dataObject1) {
+      if (highestValue < dataObject1[key]) {
+        highestValue = dataObject1[key];
       }
     }
     return Math.ceil(highestValue / nearest) * nearest;
@@ -40,7 +40,19 @@ const drawBarChart = (data, options, element) => {
     };
   };
 
-
+  // Create an object from the data passed in:
+  createDataObject = (data) => {
+    // data.sort(function(a, b) {
+    //   return a[1] - b[1];
+    // });
+    let newObj = {};
+    for (let i = 0; i < data.length; i++) {
+      const key = data[i][0];
+      const value = data[i][1];
+      newObj[key] = value;
+    }
+    return newObj;
+  };
   // Variable Declaration:
   // Let user pass in either a string or jQuery object for where to place chart:
   let renderArea;
@@ -48,21 +60,31 @@ const drawBarChart = (data, options, element) => {
     renderArea = element;
   } else if (typeof element === 'string') {
     renderArea = $(element);
-  }
-
-  // Create an object from the data passed in to args:
-  let dataObject = {};
-  for (let i = 0; i < data.length; i++) {
-    const key = data[i][0];
-    const value = data[i][1];
-    dataObject[key] = value;
+  } else {
+    console.error("barChartIt: Third argument passed to drawBarChart() must be a string or jQuery object.");
   }
 
   // User customizable options. Default set below:
   let {
-    title = "", titleFontSize = "12", titleFontColour = "grey", barColour = "grey", labelColour = "black", barSpacing = 5, fontSize = 8, positionOfValues = "center", tickFactor = 5
+    title = "", titleFontSize = "12", titleFontColour = "grey", barColour1 = "blue", barColour2 = "red", labelColour = "black", barSpacing = 5, fontSize = 8, positionOfValues = "center", tickFactor = 5
   } = options;
 
+  const dataObject1 = createDataObject(data[0]);
+  const data1HighestBar = findHighestPoint(dataObject1, tickFactor);
+  let dataObject2 = {};
+  let data2HighestBar = 0;
+
+  if (data[1] !== undefined) {
+    dataObject2 = createDataObject(data[1]);
+    data2HighestBar = findHighestPoint(dataObject2, tickFactor);
+    if (data1HighestBar > data2HighestBar) {
+      highestBar = data1HighestBar;
+    } else {
+      highestBar = data2HighestBar;
+    }
+  } else {
+    highestBar = data1HighestBar;
+  }
   // Create an area in the renderArea where the chart will actually be rendered:
   renderArea.append("<!-- barChartIt Rendered Below: --><div class='barChartIt'></div><!-- /.barChartIt -->");
 
@@ -81,10 +103,8 @@ const drawBarChart = (data, options, element) => {
     "font-size": `${titleFontSize}px`
   });
 
-
   // Labeling Values on side of chart:
   // tickFactor determines increments:
-  highestBar = findHighestPoint(dataObject, tickFactor);
   lineWidth = Math.ceil(chartHeight / highestBar * 10);
   labelSpaceBetween = highestBar / tickFactor;
   const eachLinePx = (chartHeight / labelSpaceBetween);
@@ -105,7 +125,10 @@ const drawBarChart = (data, options, element) => {
   });
 
   // Calculate the number of bars needed, and the space they will take:
-  const numberOfBars = Object.keys(dataObject).length;
+  let numberOfBars = Object.keys(dataObject1).length;
+  if (dataObject2) {
+    numberOfBars += Object.keys(dataObject2).length;
+  }
   const numberOfSpaces = numberOfBars - 1;
   const sizeOfBars = (chartWidth - (numberOfSpaces * barSpacing)) / numberOfBars;
   $('.barChartIt').append('<div class="barArea">');
@@ -113,12 +136,32 @@ const drawBarChart = (data, options, element) => {
 
   // Create the bars and their labels, adding to the posLeft which absolutely position divs
   let posLeft = 0;
+
   for (let i = 0; i < numberOfBars; i++) {
-    let barKey = Object.keys(dataObject)[i];
-    let barValue = Object.values(dataObject)[i];
+    let chartingObject;
+    let barKey;
+    let barValue;
+    let dataObjectLength = Object.keys(dataObject1).length;
+    let colorOfBar;
+
+    // If there's two charts datasets, we need to account for that adding it into chart:
+    if (i < dataObjectLength) {
+      barKey = Object.keys(dataObject1)[i];
+      barValue = Object.values(dataObject1)[i];
+      colorOfBar = barColour1;
+    } else {
+      barKey = Object.keys(dataObject2)[i - dataObjectLength];
+      barValue = Object.values(dataObject2)[i - dataObjectLength];
+      colorOfBar = barColour2;
+    }
+
     let barHeight = barValue * chartHeight / highestBar;
-    let barHtml = `<div class="bar-${i} bar"><div class ="bar-${i}-label bar-label">${barValue}</div></div>`;
-    let barLabelHtml = `<div class='bar-text-label bar-${i}-text-label'>${barKey}</div>`;
+
+    let barHtml = "";
+    let barLabelHtml = "";
+
+    barHtml = `<div class="bar-${i} bar"><div class ="bar-${i}-label bar-label">${barValue}</div></div>`;
+    barLabelHtml = `<div class='bar-text-label bar-${i}-text-label'>${barKey}</div>`;
 
     $('.barArea').append(barHtml);
     $('.barLabelArea').append(barLabelHtml);
@@ -128,7 +171,7 @@ const drawBarChart = (data, options, element) => {
       "width": sizeOfBars,
       "height": barHeight,
       "left": posLeft,
-      "background": barColour
+      "background": colorOfBar
     });
 
     // Apply custom user options and calculated dimensions to labels:
