@@ -7,7 +7,6 @@
 .barChartApp {
   position: relative;
   left: 25px;
-  font-family: sans-serif;
 }
 
 .chartingArea {
@@ -44,6 +43,7 @@
   animation-duration: 1s;
   animation-name: slidein;
   opacity: .75;
+  border-radius: 3px 3px 0 0;
 }
 
 .barLabelArea {

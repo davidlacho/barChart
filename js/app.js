@@ -13,17 +13,16 @@ $(document).ready(() => {
   const sampleOptions = {
     "title": "Sample Data",
     "titleFontSize": 16,
-    "titleFontColour": "black",
-    "barColour": "blue",
-    "labelColour": "grey",
+    "titleFontColour": "grey",
+    "barColour": "green",
+    "labelColour": "black",
     "barSpacing": 5,
-    "BarAxes": "x",
     "fontSize": 12,
     "positionOfValues": "center",
-    "tickFactor": 2
+    "tickFactor": 5
   };
 
-  const sampleElement = $('.chart');
+  const sampleElement = '.chart';
 
   drawBarChart(sampleData, sampleOptions, sampleElement);
 
