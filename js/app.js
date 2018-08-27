@@ -29,8 +29,8 @@ const sampleOptions = {
   "labelColour": "black",
   "barSpacing": 5,
   "fontSize": 12,
-  "positionOfValues": "center",
-  "tickFactor": 5
+  "positionOfValues": "bottom",
+  "tickFactor": 25
 };
 
 const sampleElement = '.chart';

@@ -1,6 +1,9 @@
 // Stuff to do still:
 
-// Allow the user to pass multiple values for each bar. Think about how you would need to structure this data compared to a single bar chart. This should also support all the features of the single bar chart, including: Customizable bar colours, per value, Customizable label colours
+// Right now it's charting two datasets. User should be able to put in as many as they want.
+// Code can be broken down further into funcitons.
+// Implementing the secon dataset was kind of messy. I don't like the way that I did it. Refactor!
+// There should also be customizable options for the new datasets, such as what their font color will be
 
 const drawBarChart = (data, options, element) => {
 
@@ -42,9 +45,6 @@ const drawBarChart = (data, options, element) => {
 
   // Create an object from the data passed in:
   createDataObject = (data) => {
-    // data.sort(function(a, b) {
-    //   return a[1] - b[1];
-    // });
     let newObj = {};
     for (let i = 0; i < data.length; i++) {
       const key = data[i][0];
@@ -53,6 +53,24 @@ const drawBarChart = (data, options, element) => {
     }
     return newObj;
   };
+
+
+  mergeDataObjects = (data) => {
+    let newArr = [];
+    for (let i = 0; i < data.length; i++) {
+      let lengthOfObj = Object.keys(data[i]).length;
+      for (j = 0; j < lengthOfObj; j++) {
+        const key = Object.keys(data[i])[j];
+        const value = data[i][key];
+        newArr.push([key, value, i]);
+      }
+    }
+    newArr.sort(function(a, b) {
+      return a[1] - b[1];
+    });
+    return newArr;
+  };
+
   // Variable Declaration:
   // Let user pass in either a string or jQuery object for where to place chart:
   let renderArea;
@@ -85,6 +103,9 @@ const drawBarChart = (data, options, element) => {
   } else {
     highestBar = data1HighestBar;
   }
+
+  console.log(mergeDataObjects([dataObject1, dataObject2]));
+
   // Create an area in the renderArea where the chart will actually be rendered:
   renderArea.append("<!-- barChartIt Rendered Below: --><div class='barChartIt'></div><!-- /.barChartIt -->");
 
@@ -131,6 +152,9 @@ const drawBarChart = (data, options, element) => {
   }
   const numberOfSpaces = numberOfBars - 1;
   const sizeOfBars = (chartWidth - (numberOfSpaces * barSpacing)) / numberOfBars;
+
+
+
   $('.barChartIt').append('<div class="barArea">');
   $('.barChartIt').append('<div class="barLabelArea">');
 
