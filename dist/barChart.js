@@ -1,9 +1,8 @@
 // Stuff to do still:
 
-// Right now it's charting two datasets. User should be able to put in as many as they want.
 // Code can be broken down further into funcitons.
-// Implementing the secon dataset was kind of messy. I don't like the way that I did it. Refactor!
 // There should also be customizable options for the new datasets, such as what their font color will be
+// currently using eval. This is messy.
 
 const drawBarChart = (data, options, element) => {
 
@@ -43,16 +42,26 @@ const drawBarChart = (data, options, element) => {
     };
   };
 
-  mergeArrays = (data) => {
+  mergeArrays = (data, sortMethod) => {
     let newArr = [];
     for (let i = 0; i < data.length; i++) {
       for (j = 0; j < data[i].length; j++) {
+        // Also pushes what array this originally belong to. Allows for user customization:
         newArr.push([data[i][j][0], data[i][j][1], i]);
       }
     }
-    newArr.sort(function(a, b) {
-      return a[1] - b[1];
-    });
+    // Sorting:
+
+    if (sortMethod === "ascending") {
+      newArr.sort(function(a, b) {
+        return a[1] - b[1];
+      });
+    } else if (sortMethod === "descending") {
+      newArr.sort(function(a, b) {
+        return b[1] - a[1];
+      });
+    }
+
     return newArr;
   };
 
@@ -69,10 +78,10 @@ const drawBarChart = (data, options, element) => {
 
   // User customizable options. Default set below:
   let {
-    title = "", titleFontSize = "12", titleFontColour = "grey", barColour1 = "blue", barColour2 = "red", barColour3 = "green", barColour4 = "yellow", barColour5 = "purple", labelColour = "black", barSpacing = 5, fontSize = 8, positionOfValues = "center", tickFactor = 5
+    title = "", titleFontSize = "12", titleFontColour = "grey", barColour1 = "blue", barColour2 = "red", barColour3 = "green", barColour4 = "yellow", barColour5 = "purple", labelColour = "black", barSpacing = 5, fontSize = 8, positionOfValues = "center", tickFactor = 5, sortMethod = "none"
   } = options;
 
-  const mergedData = mergeArrays(data);
+  const mergedData = mergeArrays(data, sortMethod);
   const highestBar = findHighestPoint(mergedData, tickFactor);
 
 
@@ -136,7 +145,6 @@ const drawBarChart = (data, options, element) => {
     barLabel = mergedData[i][0];
     barValue = mergedData[i][1];
     colorOfBar = eval(`barColour${mergedData[i][2] + 1}`);
-    console.log(barLabel, barValue, colorOfBar);
 
     let barHeight = barValue * chartHeight / highestBar;
 

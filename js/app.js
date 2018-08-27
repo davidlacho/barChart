@@ -15,21 +15,26 @@ const sampleData = [
     ["Google Celebrities", 50],
     ["Code", 10],
     ["Tindr", 100]
+  ],
+  [
+    ["Duck Duck Go", 103]
   ]
 ];
 
 
 const sampleOptions = {
-  "title": "Sample Data",
+  "title": "Stuff People Do On Their Time Off",
   "titleFontSize": 16,
   "titleFontColour": "grey",
-  "barColour1": "red",
-  "barColour2": "blue",
+  "barColour1": "cyan",
+  "barColour2": "magenta",
+  "barColour3": "purple",
   "labelColour": "black",
   "barSpacing": 5,
-  "fontSize": 12,
-  "positionOfValues": "bottom",
-  "tickFactor": 25
+  "fontSize": 10,
+  "positionOfValues": "top",
+  "tickFactor": 5,
+  "sortMethod": "ascending"
 };
 
 const sampleElement = '.chart';
