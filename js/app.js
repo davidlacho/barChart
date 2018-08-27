@@ -14,8 +14,7 @@ const sampleData = [
     ["Plan Travel", 70],
     ["Google Celebrities", 50],
     ["Code", 10],
-    ["Tindr", 100],
-    ["Sleep", 37]
+    ["Tindr", 100]
   ]
 ];
 

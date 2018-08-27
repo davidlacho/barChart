@@ -9,11 +9,11 @@ const drawBarChart = (data, options, element) => {
 
   // Helper Functions:
   // This function will return a value that is X amount higher than the tallest point (gives whitespace to the chart)
-  findHighestPoint = (dataObject1, nearest) => {
+  findHighestPoint = (data, nearest) => {
     let highestValue = 0;
-    for (let key in dataObject1) {
-      if (highestValue < dataObject1[key]) {
-        highestValue = dataObject1[key];
+    for (i = 0; i < data.length; i++) {
+      if (highestValue < data[i][1]) {
+        highestValue = data[i][1];
       }
     }
     return Math.ceil(highestValue / nearest) * nearest;
@@ -43,26 +43,11 @@ const drawBarChart = (data, options, element) => {
     };
   };
 
-  // Create an object from the data passed in:
-  createDataObject = (data) => {
-    let newObj = {};
-    for (let i = 0; i < data.length; i++) {
-      const key = data[i][0];
-      const value = data[i][1];
-      newObj[key] = value;
-    }
-    return newObj;
-  };
-
-
-  mergeDataObjects = (data) => {
+  mergeArrays = (data) => {
     let newArr = [];
     for (let i = 0; i < data.length; i++) {
-      let lengthOfObj = Object.keys(data[i]).length;
-      for (j = 0; j < lengthOfObj; j++) {
-        const key = Object.keys(data[i])[j];
-        const value = data[i][key];
-        newArr.push([key, value, i]);
+      for (j = 0; j < data[i].length; j++) {
+        newArr.push([data[i][j][0], data[i][j][1], i]);
       }
     }
     newArr.sort(function(a, b) {
@@ -84,27 +69,12 @@ const drawBarChart = (data, options, element) => {
 
   // User customizable options. Default set below:
   let {
-    title = "", titleFontSize = "12", titleFontColour = "grey", barColour1 = "blue", barColour2 = "red", labelColour = "black", barSpacing = 5, fontSize = 8, positionOfValues = "center", tickFactor = 5
+    title = "", titleFontSize = "12", titleFontColour = "grey", barColour1 = "blue", barColour2 = "red", barColour3 = "green", barColour4 = "yellow", barColour5 = "purple", labelColour = "black", barSpacing = 5, fontSize = 8, positionOfValues = "center", tickFactor = 5
   } = options;
 
-  const dataObject1 = createDataObject(data[0]);
-  const data1HighestBar = findHighestPoint(dataObject1, tickFactor);
-  let dataObject2 = {};
-  let data2HighestBar = 0;
+  const mergedData = mergeArrays(data);
+  const highestBar = findHighestPoint(mergedData, tickFactor);
 
-  if (data[1] !== undefined) {
-    dataObject2 = createDataObject(data[1]);
-    data2HighestBar = findHighestPoint(dataObject2, tickFactor);
-    if (data1HighestBar > data2HighestBar) {
-      highestBar = data1HighestBar;
-    } else {
-      highestBar = data2HighestBar;
-    }
-  } else {
-    highestBar = data1HighestBar;
-  }
-
-  console.log(mergeDataObjects([dataObject1, dataObject2]));
 
   // Create an area in the renderArea where the chart will actually be rendered:
   renderArea.append("<!-- barChartIt Rendered Below: --><div class='barChartIt'></div><!-- /.barChartIt -->");
@@ -146,13 +116,9 @@ const drawBarChart = (data, options, element) => {
   });
 
   // Calculate the number of bars needed, and the space they will take:
-  let numberOfBars = Object.keys(dataObject1).length;
-  if (dataObject2) {
-    numberOfBars += Object.keys(dataObject2).length;
-  }
+  let numberOfBars = mergedData.length;
   const numberOfSpaces = numberOfBars - 1;
   const sizeOfBars = (chartWidth - (numberOfSpaces * barSpacing)) / numberOfBars;
-
 
 
   $('.barChartIt').append('<div class="barArea">');
@@ -163,21 +129,14 @@ const drawBarChart = (data, options, element) => {
 
   for (let i = 0; i < numberOfBars; i++) {
     let chartingObject;
-    let barKey;
+    let barLabel;
     let barValue;
-    let dataObjectLength = Object.keys(dataObject1).length;
     let colorOfBar;
 
-    // If there's two charts datasets, we need to account for that adding it into chart:
-    if (i < dataObjectLength) {
-      barKey = Object.keys(dataObject1)[i];
-      barValue = Object.values(dataObject1)[i];
-      colorOfBar = barColour1;
-    } else {
-      barKey = Object.keys(dataObject2)[i - dataObjectLength];
-      barValue = Object.values(dataObject2)[i - dataObjectLength];
-      colorOfBar = barColour2;
-    }
+    barLabel = mergedData[i][0];
+    barValue = mergedData[i][1];
+    colorOfBar = eval(`barColour${mergedData[i][2] + 1}`);
+    console.log(barLabel, barValue, colorOfBar);
 
     let barHeight = barValue * chartHeight / highestBar;
 
@@ -185,7 +144,7 @@ const drawBarChart = (data, options, element) => {
     let barLabelHtml = "";
 
     barHtml = `<div class="bar-${i} bar"><div class ="bar-${i}-label bar-label">${barValue}</div></div>`;
-    barLabelHtml = `<div class='bar-text-label bar-${i}-text-label'>${barKey}</div>`;
+    barLabelHtml = `<div class='bar-text-label bar-${i}-text-label'>${barLabel}</div>`;
 
     $('.barArea').append(barHtml);
     $('.barLabelArea').append(barLabelHtml);
