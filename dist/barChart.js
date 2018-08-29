@@ -128,13 +128,13 @@ const drawBarChart = (data, options, element) => {
     $('.chartingArea').append(`<div class="label label-${labelCounter}">${labelCounter}</div>`);
     labelCounter -= tickFactor;
   }
+
+  // Create areas where bars and labels will be rendered:
   $('.barChartIt').append('<div class="barArea"></div><!-- /.barArea -->');
   $('.barChartIt').append('<div class="barLabelArea"></div><!-- /.barLabelArea -->');
-
-  // Append a label "0" to the bottom of the chart:
+  // Append a label "0" to the bottom of the chart and add custom user styles to the side labels:
   $('.barLabelArea').append(`<div class="label-0">0</div>`);
 
-  // Add custom user styles to the side labels:
   $(".label").css({
     "height": `${eachLinePx - 1}px`,
     "color": labelColour
@@ -210,6 +210,6 @@ const drawBarChart = (data, options, element) => {
     posLeft += sizeOfBars + barSpacing;
 
   }
-  
+
 };
 // End drawBarChart
