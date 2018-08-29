@@ -40,7 +40,7 @@
   position: absolute;
   bottom: 0;
   height: 0;
-  animation-duration: 1s;
+  animation-duration: 1.5s;
   animation-name: slidein;
   opacity: .75;
   border-radius: 3px 3px 0 0;
