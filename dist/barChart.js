@@ -1,8 +1,6 @@
 // Stuff to do still:
 
 // Code can be broken down further into funcitons.
-// There should also be customizable options for the new datasets, such as what their font color will be
-// currently using eval. This is messy.
 
 const drawBarChart = (data, options, element) => {
 
@@ -77,7 +75,7 @@ const drawBarChart = (data, options, element) => {
   }
 
   // User customizable options. Default set below:
-  let {
+  const {
     title = "", titleFontSize = "12", titleFontColour = "grey", barColours = ["blue", "red", "green", "yellow", "purple"], labelColour = "black", barSpacing = 5, fontSize = 8, positionOfValues = "center", tickFactor = 5, sortMethod = "none"
   } = options;
 
@@ -93,7 +91,6 @@ const drawBarChart = (data, options, element) => {
   renderArea.append("<!-- barChartIt Rendered Below: --><div class='barChartIt'></div><!-- /.barChartIt -->");
   $(".barChartIt").width(chartWidth);
   $(".barChartIt").height(chartHeight);
-
 
   // Add title:
   $(".barChartIt").append(`<div class='titleArea'>${title}</div>`);
@@ -121,51 +118,38 @@ const drawBarChart = (data, options, element) => {
   $('.barChartIt').append('<div class="barLabelArea">');
 
   // Append a label "0" to the bottom of the chart:
-  $('.barLabelArea').append(`<div class="label label-0">0</div>`);
+  $('.barLabelArea').append(`<div class="label-0">0</div>`);
 
-  // Add custom user styles to the side label:
+  // Add custom user styles to the side labels:
   $(".label").css({
     "height": `${eachLinePx - 1}px`,
     "color": labelColour
   });
 
+  $(".label-0").css({
+    "color": labelColour
+  });
 
   // Calculate the number of bars needed, and the space they will take:
-  let numberOfBars = mergedData.length;
+  const numberOfBars = mergedData.length;
   const numberOfSpaces = numberOfBars - 1;
   const sizeOfBars = (chartWidth - (numberOfSpaces * barSpacing)) / numberOfBars;
-
-
-
-
 
   // Create the bars and their labels, adding to the posLeft which absolutely position divs
   let posLeft = 0;
 
   for (let i = 0; i < numberOfBars; i++) {
-    let chartingObject;
-    let barLabel;
-    let barValue;
-    let colorOfBar;
-
-    let barGroup = mergedData[i][2];
-
-    barLabel = mergedData[i][0];
-    barValue = mergedData[i][1];
+    const barGroup = mergedData[i][2];
+    const barLabel = mergedData[i][0];
+    const barValue = mergedData[i][1];
     if (barColours[barGroup] === undefined) {
       barColours.push("blue", "red", "green", "yellow", "purple");
       console.warn(`barChartIt: User has not defined a colour for the bars of data set #${barGroup + 1} (Array ${barGroup}). Consider adding additional colors to the barColours array in options.`);
     }
-    colorOfBar = barColours[barGroup];
-
-
-    let barHeight = barValue * chartHeight / highestBar;
-
-    let barHtml = "";
-    let barLabelHtml = "";
-
-    barHtml = `<div class="bar-${i} bar"><div class ="bar-${i}-label bar-label">${barValue}</div></div>`;
-    barLabelHtml = `<div class='bar-text-label bar-${i}-text-label'>${barLabel}</div>`;
+    const colorOfBar = barColours[barGroup];
+    const barHeight = barValue * chartHeight / highestBar;
+    const barHtml = `<div class="bar-${i} bar"><div class ="bar-${i}-label bar-label">${barValue}</div></div>`;
+    const barLabelHtml = `<div class='bar-text-label bar-${i}-text-label'>${barLabel}</div>`;
 
     $('.barArea').append(barHtml);
     $('.barLabelArea').append(barLabelHtml);

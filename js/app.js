@@ -1,36 +1,34 @@
 const sampleData = [
   [
     ["Play Sports", 45],
-    ["Talk on Phone", 53],
-    ["Visit With Friends", 11],
-    ["Earn Money", 50],
-    ["Chat Online", 10],
+    ["Talk on Phone", 54],
     ["School Clubs", 22],
     ["Watch TV", 37]
   ],
   [
-    ["Eat Sushi", 45],
+    ["Eat Sushi", 46],
     ["Play Switch", 53],
-    ["Plan Travel", 70],
-    ["Google Celebrities", 50],
     ["Code", 10],
-    ["Tindr", 100]
+    ["Tindr", 39]
   ],
   [
-    ["Duck Duck Go", 103]
+    ["Chat Online", 10],
+    ["Earn Money", 50],
+    ["Visit With Friends", 11]
   ]
 ];
 
 
 const sampleOptions = {
-  "title": "Stuff People Do On Their Time Off",
-  "titleFontSize": 16,
-  "titleFontColour": "grey",
-  "barColours": ["orange", "red", "green"],
-  "barSpacing": 5,
+  "title": "What People Do On Their Spare Time",
+  "titleFontSize": "16",
+  "titleFontColour": "cadetblue",
+  "barColours": ["cyan", "magenta", "orange"],
+  "labelColour": "lightblue",
+  "barSpacing": 4,
   "fontSize": 10,
-  "positionOfValues": "top",
-  "tickFactor": 5,
+  "positionOfValues": "bottom",
+  "tickFactor": 10,
   "sortMethod": "ascending"
 };
 
