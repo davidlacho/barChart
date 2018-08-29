@@ -1,14 +1,13 @@
-// Stuff to do still:
-
-// Code can be broken down further into funcitons.
+'use strict';
 
 const drawBarChart = (data, options, element) => {
 
   // Helper Functions:
+
   // This function will return a value that is X amount higher than the tallest point (gives whitespace to the chart)
-  findHighestPoint = (data, nearest) => {
+  const findHighestPoint = (data, nearest) => {
     let highestValue = 0;
-    for (i = 0; i < data.length; i++) {
+    for (let i = 0; i < data.length; i++) {
       if (highestValue < data[i][1]) {
         highestValue = data[i][1];
       }
@@ -16,7 +15,9 @@ const drawBarChart = (data, options, element) => {
     return Math.ceil(highestValue / nearest) * nearest;
   };
 
-  dimensions = (renderArea) => {
+  // This function determines the width and height of the render area, also considering that there needs to be space for labels.
+  const dimensions = renderArea => {
+
     // Determine the dimensions of the renderArea:
     let elementHeight = renderArea.height();
     let elementWidth = renderArea.width();
@@ -38,18 +39,19 @@ const drawBarChart = (data, options, element) => {
       "height": elementHeight - 50,
       "width": elementWidth - 25
     };
+
   };
 
-  mergeArrays = (data, sortMethod) => {
+  // This function merges all the data and can sort it. It keeps track of what dataset the data originally comes from:
+  const mergeArrays = (data, sortMethod) => {
     let newArr = [];
     for (let i = 0; i < data.length; i++) {
-      for (j = 0; j < data[i].length; j++) {
-        // Also pushes what array this originally belong to. Allows for user customization:
+      for (let j = 0; j < data[i].length; j++) {
         newArr.push([data[i][j][0], data[i][j][1], i]);
       }
     }
 
-    // Sorting:
+    // Sorting (if defined):
     if (sortMethod === "ascending") {
       newArr.sort(function(a, b) {
         return a[1] - b[1];
@@ -112,7 +114,8 @@ const drawBarChart = (data, options, element) => {
     "font-size": `${titleFontSize}px`
   });
 
-  // Labeling Values on side of chart. tickFactor determines increments. This fancy logic calculates how many pixels there are between each tick:
+  // Labeling Values on side of chart. tickFactor determines increments.
+  // This fancy logic calculates how many pixels there are between each tick:
   const eachLinePx = chartHeight / (highestBar / tickFactor);
 
   // Create a div that spans across the width of the chart:
@@ -121,7 +124,7 @@ const drawBarChart = (data, options, element) => {
 
   // Append divs for each tick, creating the side labels, decrementing labelCounter each time:
   let labelCounter = highestBar;
-  for (o = 0; labelCounter > 0; o += eachLinePx) {
+  for (let o = 0; labelCounter > 0; o += eachLinePx) {
     $('.chartingArea').append(`<div class="label label-${labelCounter}">${labelCounter}</div>`);
     labelCounter -= tickFactor;
   }
@@ -150,15 +153,12 @@ const drawBarChart = (data, options, element) => {
   let posLeft = 0;
 
   for (let i = 0; i < numberOfBars; i++) {
-    const barGroup = mergedData[i][2];
+    // Grab the data from the merged data aray:
     const barLabel = mergedData[i][0];
     const barValue = mergedData[i][1];
-    // We need to make sure that there are enough bar colours defined by user:
-    if (barColours[barGroup] === undefined) {
-      barColours.push("blue", "red", "green", "yellow", "purple");
-      console.warn(`barChartIt: User has not defined colors for the bars of any data set beyond #${barGroup}. Consider adding additional colors to the barColours array in options.`);
-    }
-    const colorOfBar = barColours[barGroup];
+    const barGroup = mergedData[i][2];
+
+    // Figure out the values that affect the styling of the bar:
     const barHeight = barValue * chartHeight / highestBar;
     const barHtml = `<div class="bar-${i} bar"><div class ="bar-${i}-label bar-label">${barValue}</div></div>`;
     const barLabelHtml = `<div class='bar-text-label bar-${i}-text-label'>${barLabel}</div>`;
@@ -167,6 +167,13 @@ const drawBarChart = (data, options, element) => {
     $('.barLabelArea').append(barLabelHtml);
 
     // Apply custom user options and calculated dimensions to the bars:
+    // We need to make sure that there are enough bar colours defined by user:
+    if (barColours[barGroup] === undefined) {
+      barColours.push("blue", "red", "green", "yellow", "purple");
+      console.warn(`barChartIt: User has not defined colors for the bars of any data set beyond #${barGroup}. Consider adding additional colors to the barColours array in options.`);
+    }
+    const colorOfBar = barColours[barGroup];
+
     $(`.bar-${i}`).css({
       "width": sizeOfBars,
       "height": barHeight,
@@ -174,16 +181,16 @@ const drawBarChart = (data, options, element) => {
       "background": colorOfBar
     });
 
-    // Apply custom user options and calculated dimensions to labels:
-    $(`.bar-${i}-text-label`).css({
-      "width": sizeOfBars,
-      "left": posLeft,
+    // Apply custom user options to the labels in the bar:
+    $(`.bar-${i}-label`).css({
       "font-size": fontSize,
       "color": labelColour
     });
 
-    // Apply custom user options to the labels in the bar:
-    $(`.bar-${i}-label`).css({
+    // Apply custom user options and calculated dimensions to labels:
+    $(`.bar-${i}-text-label`).css({
+      "width": sizeOfBars,
+      "left": posLeft,
       "font-size": fontSize,
       "color": labelColour
     });
@@ -199,10 +206,10 @@ const drawBarChart = (data, options, element) => {
       });
     }
 
+    // Increment posLeft for next bar's positioning:
     posLeft += sizeOfBars + barSpacing;
 
   }
-
-
+  
 };
 // End drawBarChart
