@@ -50,8 +50,8 @@ const drawBarChart = (data, options, element) => {
         newArr.push([data[i][j][0], data[i][j][1], i]);
       }
     }
-    // Sorting:
 
+    // Sorting:
     if (sortMethod === "ascending") {
       newArr.sort(function(a, b) {
         return a[1] - b[1];
@@ -78,25 +78,26 @@ const drawBarChart = (data, options, element) => {
 
   // User customizable options. Default set below:
   let {
-    title = "", titleFontSize = "12", titleFontColour = "grey", barColour1 = "blue", barColour2 = "red", barColour3 = "green", barColour4 = "yellow", barColour5 = "purple", labelColour = "black", barSpacing = 5, fontSize = 8, positionOfValues = "center", tickFactor = 5, sortMethod = "none"
+    title = "", titleFontSize = "12", titleFontColour = "grey", barColours = ["blue", "red", "green", "yellow", "purple"], labelColour = "black", barSpacing = 5, fontSize = 8, positionOfValues = "center", tickFactor = 5, sortMethod = "none"
   } = options;
 
+  // Merge the data from all arrays (and sort) but keep track of original data set (for colouring bars)
   const mergedData = mergeArrays(data, sortMethod);
   const highestBar = findHighestPoint(mergedData, tickFactor);
-
-
-  // Create an area in the renderArea where the chart will actually be rendered:
-  renderArea.append("<!-- barChartIt Rendered Below: --><div class='barChartIt'></div><!-- /.barChartIt -->");
 
   // Set dimensions of the area:
   let chartHeight = dimensions(renderArea).height;
   let chartWidth = dimensions(renderArea).width;
+
+  // Create an area in the renderArea where the chart will actually be rendered:
+  renderArea.append("<!-- barChartIt Rendered Below: --><div class='barChartIt'></div><!-- /.barChartIt -->");
   $(".barChartIt").width(chartWidth);
   $(".barChartIt").height(chartHeight);
 
 
   // Add title:
   $(".barChartIt").append(`<div class='titleArea'>${title}</div>`);
+
   // Add user defined styling to titleArea:
   $(".titleArea").css({
     "color": titleFontColour,
@@ -105,9 +106,8 @@ const drawBarChart = (data, options, element) => {
 
   // Labeling Values on side of chart:
   // tickFactor determines increments:
-  lineWidth = Math.ceil(chartHeight / highestBar * 10);
-  labelSpaceBetween = highestBar / tickFactor;
-  const eachLinePx = (chartHeight / labelSpaceBetween);
+  const labelSpaceBetween = highestBar / tickFactor;
+  const eachLinePx = chartHeight / labelSpaceBetween;
 
   // Create a div that spans across the width of the chart:
   $(".barChartIt").append("<div class='chartingArea'></div>");
@@ -117,6 +117,11 @@ const drawBarChart = (data, options, element) => {
     $('.chartingArea').append(`<div class="label label-${labelCounter}">${labelCounter}</div>`);
     labelCounter -= tickFactor;
   }
+  $('.barChartIt').append('<div class="barArea">');
+  $('.barChartIt').append('<div class="barLabelArea">');
+
+  // Append a label "0" to the bottom of the chart:
+  $('.barLabelArea').append(`<div class="label label-0">0</div>`);
 
   // Add custom user styles to the side label:
   $(".label").css({
@@ -124,14 +129,15 @@ const drawBarChart = (data, options, element) => {
     "color": labelColour
   });
 
+
   // Calculate the number of bars needed, and the space they will take:
   let numberOfBars = mergedData.length;
   const numberOfSpaces = numberOfBars - 1;
   const sizeOfBars = (chartWidth - (numberOfSpaces * barSpacing)) / numberOfBars;
 
 
-  $('.barChartIt').append('<div class="barArea">');
-  $('.barChartIt').append('<div class="barLabelArea">');
+
+
 
   // Create the bars and their labels, adding to the posLeft which absolutely position divs
   let posLeft = 0;
@@ -142,9 +148,16 @@ const drawBarChart = (data, options, element) => {
     let barValue;
     let colorOfBar;
 
+    let barGroup = mergedData[i][2];
+
     barLabel = mergedData[i][0];
     barValue = mergedData[i][1];
-    colorOfBar = eval(`barColour${mergedData[i][2] + 1}`);
+    if (barColours[barGroup] === undefined) {
+      barColours.push("blue", "red", "green", "yellow", "purple");
+      console.warn(`barChartIt: User has not defined a colour for the bars of data set #${barGroup + 1} (Array ${barGroup}). Consider adding additional colors to the barColours array in options.`);
+    }
+    colorOfBar = barColours[barGroup];
+
 
     let barHeight = barValue * chartHeight / highestBar;
 
