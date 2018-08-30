@@ -20,15 +20,15 @@ const sampleData = [
 
 
 const sampleOptions = {
-  "title": "What People Do On Their Spare Time",
+  "title": "Stuff People Do (barChartIt Demo)",
   "titleFontSize": "16",
-  "titleFontColour": "cadetblue",
-  "barColours": ["cyan", "magenta", "orange"],
-  "labelColour": "lightblue",
+  "titleFontColour": "black",
+  "barColours": ["blue", "red", "orange"],
+  "labelColour": "black",
   "barSpacing": 4,
   "fontSize": 10,
   "positionOfValues": "bottom",
-  "tickFactor": 10,
+  "tickFactor": 5,
   "sortMethod": "ascending"
 };
 
