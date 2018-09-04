@@ -100,9 +100,9 @@ A `positionOfValues` of `center` will look as such:
 ![positionOfValues With value of center](https://raw.githubusercontent.com/fiveache/barChart/master/docs/screenshots/center.png)
 ##### ``tickFactor``
 must be of type number. It defines the factor by which the values on the left of the bar chart increments. For example, a `tickFactor` of `2` will look as such:
-![tickFactor with value of 2](https://raw.githubusercontent.com/fiveache/barChart/master/docs/screenshots/tick2.png)
+![tickFactor with value of 2](https://raw.githubusercontent.com/fiveache/barChart/master/docs/screenshots/tick2.png)  
 a `tickFactor` of `5` will look as such:
-![tickFactor with value of 5](https://raw.githubusercontent.com/fiveache/barChart/master/docs/screenshots/tick5.png)
+![tickFactor with value of 5](https://raw.githubusercontent.com/fiveache/barChart/master/docs/screenshots/tick5.png)  
 ##### ``sortMethod``
 must be of type string with either values of `ascending` or `descending`. It defines the sort order of the bars. For example, a `sortMethod` with a value of `descending` will look as such:
 ![sortMethod with a value of descending](https://raw.githubusercontent.com/fiveache/barChart/master/docs/screenshots/descending.png)
