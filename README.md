@@ -142,7 +142,7 @@ If you choose to do this, the default parameters of the bar chart will be:
   `sortMethod`: `"none"`
 
  The chart will appear as such:  
- ![Default options](https://raw.githubusercontent.com/fiveache/barChart/master/docs/screenshots/default.png)
+ ![Default options](https://raw.githubusercontent.com/fiveache/barChart/master/docs/screenshots/defaultbar.png)
 
 ### element Parameter
 The `element` parameter is mandatory and should either be a DOM element represented as a string value or jQuery element that the chart will get rendered into. In referencing the `div` you created in previous steps, you can either pass in a jQuery object as such: ``$(".barChart")`` or you can pass in the value as a string: ``".barChart"``.
