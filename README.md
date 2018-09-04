@@ -4,6 +4,10 @@ barChart is a tool to chart data. With it, you can categorize data in a bar char
 
 ![barChart Screenshot](https://raw.githubusercontent.com/fiveache/barChart/master/docs/screenshots/barChart.png)
 
+## Demo
+See demo live:
+[Bar Chart Demo](https://fiveache.github.io/barChart/demo/index.html)
+
 ## Getting Started
 
 First, clone this repository into the root of your project:
@@ -73,7 +77,7 @@ const data = [
 ];
 ```
 ### options Parameter
-The `options` parameter is optional. If you wish to use barChart's default options, please omit this parameter. The `options` parameter must be a JavaScript object containing the following customizable key value pairs. All key value pairs are optional:  
+The `options` parameter is optional. If you wish to use barChart's default options, please omit this parameter. The `options` parameter must be a JavaScript object containing the following customizable key value pairs. All key value pairs are optional, and omitting them will revert to default options (explained below):  
 ##### ``title``
 must be of type string. Adds a title to the top of the bar chart.  
 ##### ``titleFontSize``
