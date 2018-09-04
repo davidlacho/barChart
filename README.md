@@ -156,17 +156,17 @@ const options = {
 ```
 ##### Default options
 If you choose to omit the options parameter, you can call `drawBarChart()` with two arguments: `data` and `element`. The call will look as such: `drawBarChart(data, element)`.  
-If you choose to do this, the default parameters of the bar chart will be:
-  `title`: `"Bar Chart"`,
- `titleFontSize`: `"12"`
-  `titleFontColour`: `"grey"`,
-  `barColours`: `["blue", "red", "green", "yellow", "purple"]`,
-  `labelColour`: `"black"`,
-  `barSpacing`: `5`,
-  `fontSize`: `8`,
-  `positionOfValues`: `"center"`,
- `tickFactor`: `5`,
-  `sortMethod`: `"none"`
+If you choose to do this, the default parameters of the bar chart will be:  
+  `title`: `"Bar Chart"`,  
+ `titleFontSize`: `"12"`,  
+  `titleFontColour`: `"grey"`,  
+  `barColours`: `["blue", "red", "green", "yellow", "purple"]`,  
+  `labelColour`: `"black"`,  
+  `barSpacing`: `5`,  
+  `fontSize`: `8`,  
+  `positionOfValues`: `"center"`,  
+ `tickFactor`: `5`,  
+  `sortMethod`: `"none"`  
 
  The chart will appear as such:  
  ![Default options](https://raw.githubusercontent.com/fiveache/barChart/master/docs/screenshots/defaultbar.png)
