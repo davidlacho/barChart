@@ -21,24 +21,24 @@ Then add the `barChartIt.js` javascript file to the head of the page you wish to
 <script src="barChart/dist/barChartIt.js"></script>
 ```
 
-In the body of your HTML, create an empty `<div>` element where you would like the bar chart to be rendered. Assign this `div` a `class` or `id` that you will use when calling barChartIt.
+In the body of your HTML, create an empty `<div>` element where you would like the bar chart to be rendered. Assign this it a `class` or `id` that you will use when calling barChartIt.
 ```
 <div class="barChartIt"></div>
 ```
 Optionally, you can give this div a width and height in your site's main css file to define the chart's dimensions. barChartIt will render within the dimensions of this div. If no dimensions are specified, it will assign a default width and height.
 
-### Prerequisites
+## Prerequisites
 
 This project requires jQuery. To install jQuery to your site visit [https://jquery.com/](https://jquery.com/).
 
-### Installing
+## Installing
 
 In your site's main javascript file, call the function `drawBarChart()`. `drawBarChart()` takes 2 arguments, and one optional argument:
 ```
 drawBarChart(data, [options], element);;
 ```
 
-##data Parameter
+### data Parameter
 The parameter `data` is mandatory and must be of type Array. The data of the array must be structured as such:
 ```
 const sampleData = [
@@ -72,7 +72,7 @@ const sampleData = [
   ]
 ];
 ```
-## options Parameter
+### options Parameter
 The `options` parameter is optional. If you wish to use barChartIt's default options, please omit this parameter. The `options` parameter must be a JavaScript object containing the following customizable key value pairs. All key value pairs are optional:  
 ``title``: must be of type string. Adds a title to the top of the bar chart.  
 ``titleFontSize``: must be of type number. Adjusts the title font size.  
@@ -100,11 +100,11 @@ const options = {
   "sortMethod": "ascending"
 };
 ```
-##element Parameter
+### element Parameter
 The `element` parameter should either be a DOM element represented as a string value or jQuery element that the chart will get rendered into. You can either pass in a jQuery object as such: ``$(".barChartIt")`` or you can pass in the value as a string: ``".barChartIt"``.
 
 
-##Example
+### Example
 
 ```
 const data = [
@@ -179,3 +179,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 * https://www.mathworks.com/matlabcentral/answers/151806-matching-value-to-corresponding-variable-via-string-name
 * https://help.github.com/articles/basic-writing-and-formatting-syntax/
 * https://en.wikipedia.org/wiki/Bar_chart
+* https://stackoverflow.com/questions/24575680/new-lines-inside-paragraph-in-readme-md
+* https://codeburst.io/parameters-arguments-in-javascript-eb1d8bd0ef04
