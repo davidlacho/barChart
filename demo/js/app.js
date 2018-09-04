@@ -1,4 +1,4 @@
-const sampleData = [
+const data = [
   [
     ["Play Sports", 45],
     ["Talk on Phone", 54],
@@ -19,7 +19,7 @@ const sampleData = [
 ];
 
 
-const sampleOptions = {
+const options = {
   "title": "Stuff People Do (barChartIt Demo)",
   "titleFontSize": "16",
   "titleFontColour": "black",
@@ -32,6 +32,6 @@ const sampleOptions = {
   "sortMethod": "ascending"
 };
 
-const sampleElement = '.chart';
+const element = '.chart';
 
-drawBarChart(sampleData, sampleOptions, sampleElement);
+drawBarChart(data, options, element);

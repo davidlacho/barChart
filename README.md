@@ -1,43 +1,149 @@
 # barChartIt
 
-barChartIt is a tool to chart data. With it, you can categorize data in a bar chart using only HTML, CSS, JavaScript and jQuery.
-
-You can customize the bar chart with in many ways, but this is optional.
+barChartIt is a tool to chart data. With it, you can categorize data in a bar chart using only HTML, CSS, JavaScript and jQuery. You can customize the bar chart with in many ways, but this is optional. This project was built for an assignment at [Lighthouse Labs](https://lighthouselabs.ca/).
 
 ![barChartIt Screenshot](https://raw.githubusercontent.com/fiveache/barChart/master/docs/screenshots/barChart.png)
 
 ## Getting Started
 
 First, clone this repository into the root of your project:
-```git clone https://github.com/fiveache/barChart.git```
+```
+git clone https://github.com/fiveache/barChart.git
+```
 
-Then add `barChartIt.css` stylesheet to the head of the page you wish to display barChartIt. The stylesheet is found in the `dist` folder:
-```<link rel="stylesheet" type="text/css" href="barChart/dist/barChartIt.css">```.
+Then add the `barChartIt.css` stylesheet to the head of the page you wish to display barChartIt. The stylesheet is found in the `dist` folder:
+```
+<link rel="stylesheet" type="text/css" href="barChart/dist/barChartIt.css">
+```
 
 Then add the `barChartIt.js` javascript file to the head of the page you wish to display barChartIt. The javascript file is found in the `dist` folder:
-```<script src="barChart/dist/barChartIt.js"></script>```
+```
+<script src="barChart/dist/barChartIt.js"></script>
+```
+
+In the body of your HTML, create an empty `<div>` element where you would like the bar chart to be rendered. Assign this `div` a `class` or `id` that you will use when calling barChartIt.
+```
+<div class="barChartIt"></div>
+```
+Optionally, you can give this div a width and height in your site's main css file to define the chart's dimensions. barChartIt will render within the dimensions of this div. If no dimensions are specified, it will assign a default width and height.
 
 ### Prerequisites
 
-This project requires jQuery. To install [jQuery to your site visit https://jquery.com/](https://jquery.com/).
+This project requires jQuery. To install jQuery to your site visit [https://jquery.com/](https://jquery.com/).
 
-<!-- ### Installing
+### Installing
 
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
-
+In your site's main javascript file, call the function `drawBarChart()`. `drawBarChart()` takes 2 arguments, and one optional argument:
 ```
-Give the example
+drawBarChart(data, [options], element);;
 ```
 
-And repeat
+##data Parameter
+The parameter `data` is mandatory and must be of type Array. The data of the array must be structured as such:
+```
+const sampleData = [
+  [
+    ["Label1", 45],
+    ["Label2", 54],
+    ["Label3", 22],
+    ["Label4", 37]
+  ]
+];
+```
+Optionally, You can pass in more than one data set to the `data` parameter by structuring the data as such:
+```
+const sampleData = [
+  [
+    ["Data1Label1", 45],
+    ["Data1Label2", 54],
+    ["Data1Label3", 22],
+    ["Data1Label4", 37]
+  ],
+  [
+    ["Data2Label1", 46],
+    ["Data2Label2", 53],
+    ["Data2Label3", 10],
+    ["Data2Label4", 39]
+  ],
+  [
+    ["Data3Label1", 10],
+    ["Data3Label2", 50],
+    ["Data3Label3", 11]
+  ]
+];
+```
+## options Parameter
+The `options` parameter is optional. If you wish to use barChartIt's default options, please omit this parameter. The `options` parameter must be a JavaScript object containing the following customizable key value pairs. All key value pairs are optional:  
+``title``: must be of type string. Adds a title to the top of the bar chart.  
+``titleFontSize``: must be of type number. Adjusts the title font size.  
+``titleFontColour``: must be of type string. Defines the title colour. Can be either a CSS Colour Name or hex value.  
+``barColours``: must be of type array. It defines the colours of the bars. It is a single array listing colour in the order you wish to assign to the data sets (i.e. the first dataset will be assigned a the first colour of the array, the second dataset will be assigned the second colour in the array, etc.).  
+``labelColour``: must be of type string. Defines the label colour. Can be either a CSS Colour Name or hex value.  
+``barSpacing``: must be of type number. It defines the number of pixels between each bar in the bar chart.  
+``fontSize``: must be of type number. Adjusts the font size of labels in the bar chart.  
+``positionOfValues``: must be of type string with either values of `top`, `bottom`, or `center`. Adjusts the position of number labels o the bars in the chart.  
+``tickFactor``: must be of type number. It defines the factor by which the values on the left of the bar chart increments.  
+``sortMethod``: must be of type string with either values of `ascending` or `descending`. It defines the sort order of the bars.  
+
+The options object should be structured as such:  
+```
+const options = {
+  "title": "Foo",
+  "titleFontSize": "16",
+  "titleFontColour": "black",
+  "barColours": ["blue", "red", "orange"],
+  "labelColour": "black",
+  "barSpacing": 4,
+  "fontSize": 10,
+  "positionOfValues": "bottom",
+  "tickFactor": 5,
+  "sortMethod": "ascending"
+};
+```
+##element Parameter
+The `element` parameter should either be a DOM element represented as a string value or jQuery element that the chart will get rendered into. You can either pass in a jQuery object as such: ``$(".barChartIt")`` or you can pass in the value as a string: ``".barChartIt"``.
+
+
+##Example
 
 ```
-until finished
-```
+const data = [
+  [
+    ["Play Sports", 45],
+    ["Talk on Phone", 54],
+    ["School Clubs", 22],
+    ["Watch TV", 37]
+  ],
+  [
+    ["Eat Sushi", 46],
+    ["Play Switch", 53],
+    ["Code", 10],
+    ["Tindr", 39]
+  ],
+  [
+    ["Chat Online", 10],
+    ["Earn Money", 50],
+    ["Visit With Friends", 11]
+  ]
+];
 
-End with an example of getting some data out of the system or using it for a little demo -->
+const options = {
+  "title": "Stuff People Do (barChartIt Demo)",
+  "titleFontSize": "16",
+  "titleFontColour": "black",
+  "barColours": ["blue", "red", "orange"],
+  "labelColour": "black",
+  "barSpacing": 4,
+  "fontSize": 10,
+  "positionOfValues": "bottom",
+  "tickFactor": 5,
+  "sortMethod": "ascending"
+};
+
+const element = '.chart';
+
+drawBarChart(data, options, element);
+```
 
 ## Author
 
