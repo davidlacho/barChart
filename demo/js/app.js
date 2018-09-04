@@ -25,11 +25,11 @@ const options = {
   "titleFontColour": "black",
   "barColours": ["blue", "red", "orange"],
   "labelColour": "black",
-  "barSpacing": 4,
-  "fontSize": 10,
+  "barSpacing": 5,
+  "fontSize": 12,
   "positionOfValues": "bottom",
   "tickFactor": 5,
-  "sortMethod": "ascending"
+  "sortMethod": ""
 };
 
 const element = '.chart';

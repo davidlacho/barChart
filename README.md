@@ -77,14 +77,31 @@ The `options` parameter is optional. If you wish to use barChart's default optio
 ``title``: must be of type string. Adds a title to the top of the bar chart.  
 ``titleFontSize``: must be of type number. Adjusts the title font size.  
 ``titleFontColour``: must be of type string. Defines the title colour. Can be either a CSS Colour Name or hex value.  
-``barColours``: must be of type array. It defines the colours of the bars. It is a single array listing colour in the order you wish to assign to the data sets (i.e. the first dataset will be assigned a the first colour of the array, the second dataset will be assigned the second colour in the array, etc.).  
+``barColours``: must be of type array. It defines the colours of the bars. It is a single array listing colour in the order you wish to assign to the data sets (i.e. the first dataset will be assigned a the first colour of the array, the second dataset will be assigned the second colour in the array, etc.). For example, defining `barColours` as `["magenta", "cyan", "aquamarine"]` will produce a bar chart as such:
+![barChart Colours Screenshot](https://raw.githubusercontent.com/fiveache/barChart/master/docs/screenshots/barChartColours.png)
 ``labelColour``: must be of type string. Defines the label colour. Can be either a CSS Colour Name or hex value.  
-``barSpacing``: must be of type number. It defines the number of pixels between each bar in the bar chart.  
+``barSpacing``: must be of type number. It defines the number of pixels between each bar in the bar chart. For example, a barChart with `20` `barSpacing` will look as such:
+![barChart With 20 barSpacing](https://raw.githubusercontent.com/fiveache/barChart/master/docs/screenshots/barChart20px.png)
 ``fontSize``: must be of type number. Adjusts the font size of labels in the bar chart.  
 ``positionOfValues``: must be of type string with either values of `top`, `bottom`, or `center`. Adjusts the position of number labels o the bars in the chart.  
-``tickFactor``: must be of type number. It defines the factor by which the values on the left of the bar chart increments.  
-``sortMethod``: must be of type string with either values of `ascending` or `descending`. It defines the sort order of the bars.  
+For example, a `positionOfValues` of `top` will look as such:
+![positionOfValues With value of top](https://raw.githubusercontent.com/fiveache/barChart/master/docs/screenshots/top.png)
+A `positionOfValues` of `bottom` will look as such:
+![positionOfValues With value of bottokm](https://raw.githubusercontent.com/fiveache/barChart/master/docs/screenshots/bottom.png)
+A `positionOfValues` of `center` will look as such:
+![positionOfValues With value of center](https://raw.githubusercontent.com/fiveache/barChart/master/docs/screenshots/center.png)
+``tickFactor``: must be of type number. It defines the factor by which the values on the left of the bar chart increments. For example, a `tickFactor` of `2` will look as such:
+![tickFactor with value of 2](https://raw.githubusercontent.com/fiveache/barChart/master/docs/screenshots/tick2.png)
+a `tickFactor` of `5` will look as such:
+![tickFactor with value of 5](https://raw.githubusercontent.com/fiveache/barChart/master/docs/screenshots/tick5.png)
+``sortMethod``: must be of type string with either values of `ascending` or `descending`. It defines the sort order of the bars. For example, a `sortMethod` with a value of `descending` will look as such:
+![sortMethod with a value of descending](https://raw.githubusercontent.com/fiveache/barChart/master/docs/screenshots/descending.png)
+a `sortMethod` with a value of `ascending` will look as such:
+![sortMethod with a value of ascending](https://raw.githubusercontent.com/fiveache/barChart/master/docs/screenshots/ascending.png)
+an undefined `sortMethod` will default to:
+![sortMethod not defined](https://raw.githubusercontent.com/fiveache/barChart/master/docs/screenshots/nosort.png)
 
+  
 The options object should be structured as such:  
 ```
 const options = {
@@ -101,7 +118,7 @@ const options = {
 };
 ```
 ### element Parameter
-The `element` parameter should either be a DOM element represented as a string value or jQuery element that the chart will get rendered into. You can either pass in a jQuery object as such: ``$(".barChart")`` or you can pass in the value as a string: ``".barChart"``.
+The `element` parameter is mandatory and should either be a DOM element represented as a string value or jQuery element that the chart will get rendered into. In referencing the `div` you created in previous steps, you can either pass in a jQuery object as such: ``$(".barChart")`` or you can pass in the value as a string: ``".barChart"``.
 
 
 ### Example
