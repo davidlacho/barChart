@@ -1,8 +1,8 @@
-# barChartIt
+# barChart
 
-barChartIt is a tool to chart data. With it, you can categorize data in a bar chart using only HTML, CSS, JavaScript and jQuery. You can customize the bar chart with in many ways, but this is optional. This project was built for an assignment at [Lighthouse Labs](https://lighthouselabs.ca/).
+barChart is a tool to chart data. With it, you can categorize data in a bar chart using only HTML, CSS, JavaScript and jQuery. You can customize the bar chart with in many ways, but this is optional. This project was built for an assignment at [Lighthouse Labs](https://lighthouselabs.ca/).
 
-![barChartIt Screenshot](https://raw.githubusercontent.com/fiveache/barChart/master/docs/screenshots/barChart.png)
+![barChart Screenshot](https://raw.githubusercontent.com/fiveache/barChart/master/docs/screenshots/barChart.png)
 
 ## Getting Started
 
@@ -11,21 +11,21 @@ First, clone this repository into the root of your project:
 git clone https://github.com/fiveache/barChart.git
 ```
 
-Then add the `barChartIt.css` stylesheet to the head of the page you wish to display barChartIt. The stylesheet is found in the `dist` folder:
+Then add the `barChart.css` stylesheet to the head of the page you wish to display barChart. The stylesheet is found in the `dist` folder:
 ```
-<link rel="stylesheet" type="text/css" href="barChart/dist/barChartIt.css">
-```
-
-Then add the `barChartIt.js` javascript file to the head of the page you wish to display barChartIt. The javascript file is found in the `dist` folder:
-```
-<script src="barChart/dist/barChartIt.js"></script>
+<link rel="stylesheet" type="text/css" href="barChart/dist/barChart.css">
 ```
 
-In the body of your HTML, create an empty `<div>` element where you would like the bar chart to be rendered. Assign this it a `class` or `id` that you will use when calling barChartIt.
+Then add the `barChart.js` javascript file to the head of the page you wish to display barChart. The javascript file is found in the `dist` folder:
 ```
-<div class="barChartIt"></div>
+<script src="barChart/dist/barChart.js"></script>
 ```
-Optionally, you can give this div a width and height in your site's main css file to define the chart's dimensions. barChartIt will render within the dimensions of this div. If no dimensions are specified, it will assign a default width and height.
+
+In the body of your HTML, create an empty `<div>` element where you would like the bar chart to be rendered. Assign this it a `class` or `id` that you will use when calling barChart.
+```
+<div class="barChart"></div>
+```
+Optionally, you can give this div a width and height in your site's main css file to define the chart's dimensions. barChart will render within the dimensions of this div. If no dimensions are specified, it will assign a default width and height.
 
 ## Prerequisites
 
@@ -35,13 +35,13 @@ This project requires jQuery. To install jQuery to your site visit [https://jque
 
 In your site's main javascript file, call the function `drawBarChart()`. `drawBarChart()` takes 2 arguments, and one optional argument:
 ```
-drawBarChart(data, [options], element);;
+drawBarChart(data, [options], element);
 ```
 
 ### data Parameter
 The parameter `data` is mandatory and must be of type Array. The data of the array must be structured as such:
 ```
-const sampleData = [
+const data = [
   [
     ["Label1", 45],
     ["Label2", 54],
@@ -52,7 +52,7 @@ const sampleData = [
 ```
 Optionally, You can pass in more than one data set to the `data` parameter by structuring the data as such:
 ```
-const sampleData = [
+const data = [
   [
     ["Data1Label1", 45],
     ["Data1Label2", 54],
@@ -73,7 +73,7 @@ const sampleData = [
 ];
 ```
 ### options Parameter
-The `options` parameter is optional. If you wish to use barChartIt's default options, please omit this parameter. The `options` parameter must be a JavaScript object containing the following customizable key value pairs. All key value pairs are optional:  
+The `options` parameter is optional. If you wish to use barChart's default options, please omit this parameter. The `options` parameter must be a JavaScript object containing the following customizable key value pairs. All key value pairs are optional:  
 ``title``: must be of type string. Adds a title to the top of the bar chart.  
 ``titleFontSize``: must be of type number. Adjusts the title font size.  
 ``titleFontColour``: must be of type string. Defines the title colour. Can be either a CSS Colour Name or hex value.  
@@ -101,7 +101,7 @@ const options = {
 };
 ```
 ### element Parameter
-The `element` parameter should either be a DOM element represented as a string value or jQuery element that the chart will get rendered into. You can either pass in a jQuery object as such: ``$(".barChartIt")`` or you can pass in the value as a string: ``".barChartIt"``.
+The `element` parameter should either be a DOM element represented as a string value or jQuery element that the chart will get rendered into. You can either pass in a jQuery object as such: ``$(".barChart")`` or you can pass in the value as a string: ``".barChart"``.
 
 
 ### Example
@@ -128,7 +128,7 @@ const data = [
 ];
 
 const options = {
-  "title": "Stuff People Do (barChartIt Demo)",
+  "title": "Stuff People Do (barChart Demo)",
   "titleFontSize": "16",
   "titleFontColour": "black",
   "barColours": ["blue", "red", "orange"],

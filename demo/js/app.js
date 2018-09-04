@@ -20,7 +20,7 @@ const data = [
 
 
 const options = {
-  "title": "Stuff People Do (barChartIt Demo)",
+  "title": "Stuff People Do (barChart Demo)",
   "titleFontSize": "16",
   "titleFontColour": "black",
   "barColours": ["blue", "red", "orange"],
