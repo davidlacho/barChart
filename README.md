@@ -1,12 +1,16 @@
 # barChart
 
-barChart is a tool to chart data. With it, you can categorize data in a bar chart using only HTML, CSS, JavaScript and jQuery. You can customize the bar chart with in many ways, but this is optional. This project was built for an assignment at [Lighthouse Labs](https://lighthouselabs.ca/).
+barChart is a tool to chart data. With it, you can categorize data in a bar chart using only HTML, CSS, JavaScript and jQuery. You can customize the bar chart in many ways, but this is optional. This project was built for an optional assignment at [Lighthouse Labs](https://lighthouselabs.ca/).
 
 ![barChart Screenshot](https://raw.githubusercontent.com/fiveache/barChart/master/docs/screenshots/barChart.png)
 
 ## Demo
 See demo live:
 [Bar Chart Demo](https://fiveache.github.io/barChart/demo/index.html)
+
+## Prerequisites
+
+This project requires jQuery. To install jQuery to your site visit [https://jquery.com/](https://jquery.com/).
 
 ## Getting Started
 
@@ -20,20 +24,39 @@ Then add the `barChart.css` stylesheet to the head of the page you wish to displ
 <link rel="stylesheet" type="text/css" href="barChart/dist/barChart.css">
 ```
 
-Then add the `barChart.js` javascript file to the head of the page you wish to display barChart. The javascript file is found in the `dist` folder:
+Then add the `barChart.js` javascript file AFTER the jQuery file, but BEFORE your page's `app.js` (or equivalent) file. The javascript file is found in the `dist` folder:
 ```
 <script src="barChart/dist/barChart.js"></script>
 ```
 
-In the body of your HTML, create an empty `<div>` element where you would like the bar chart to be rendered. Assign this it a `class` or `id` that you will use when calling barChart.
+In the body of the page (where you would like the bar chart to appear), create an empty `<div>` element where you would like the bar chart to be rendered. Assign this `<div>` a `class` or `id` that you will use when calling barChart.
 ```
 <div class="barChart"></div>
 ```
 Optionally, you can give this div a width and height in your site's main css file to define the chart's dimensions. barChart will render within the dimensions of this div. If no dimensions are specified, it will assign a default width and height.
 
-## Prerequisites
+The head and body should be structured similar to this example:
+```
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Example</title>
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <link rel="stylesheet" type="text/css" href="barChart/dist/barChart.css">
+  </head>
 
-This project requires jQuery. To install jQuery to your site visit [https://jquery.com/](https://jquery.com/).
+  <body>
+    <div class="chart"></div>
+    <!-- jQuery: -->
+    <script src="jQuery.js"></script>
+    <!-- barChart: -->
+    <script src="barChart/dist/barChart.js"></script>
+    <!-- Site's app.js -->
+    <script src="app.js"></script>
+  </body>
+</html>
+```
 
 ## Installing
 
@@ -193,6 +216,9 @@ const element = '.chart';
 
 drawBarChart(data, options, element);
 ```
+
+## Work To Do
+We should be able to flip the bar chart axes.
 
 ## Author
 
