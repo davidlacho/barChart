@@ -73,10 +73,10 @@ const drawBarChart = (data, options, element) => {
 
   if (options.jquery) {
     renderArea = options;
-    console.warn("barChartIt: Consider passing custom user options or empty object as second parameter in drawBarChart.");
+    console.warn("barChartIt: Consider passing custom user options as second parameter in drawBarChart.");
   } else if (typeof options === 'string') {
     renderArea = $(options);
-    console.warn("barChartIt: Consider passing custom user options or empty object as second parameter in drawBarChart.");
+    console.warn("barChartIt: Consider passing custom user options as second parameter in drawBarChart.");
   } else if (element.jquery) {
     renderArea = element;
   } else if (typeof element === 'string') {
@@ -89,6 +89,8 @@ const drawBarChart = (data, options, element) => {
   const {
     title = "Bar Chart", titleFontSize = "12", titleFontColour = "grey", barColours = ["blue", "red", "green", "yellow", "purple"], labelColour = "black", barSpacing = 5, fontSize = 8, positionOfValues = "center", tickFactor = 5, sortMethod = "none"
   } = options;
+
+  // The bulk of the app:
 
   // Merge the data from all arrays (and sort them if defined)... but keep track of original data set (for colouring bars)
   const mergedData = mergeArrays(data, sortMethod);
@@ -120,7 +122,6 @@ const drawBarChart = (data, options, element) => {
 
   // Create a div that spans across the width of the chart:
   $(".barChartIt").append("<div class='chartingArea'></div><!-- /.chartingArea -->");
-
 
   // Append divs for each tick, creating the side labels, decrementing labelCounter each time:
   let labelCounter = highestBar;

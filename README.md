@@ -217,9 +217,6 @@ const element = '.chart';
 drawBarChart(data, options, element);
 ```
 
-## Work To Do
-We should be able to flip the bar chart axes.
-
 ## Author
 
 **[David Lacho](https://github.com/fiveache)** - *Initial work*
